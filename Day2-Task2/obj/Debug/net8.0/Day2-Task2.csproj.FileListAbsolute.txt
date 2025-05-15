@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\Day2-Task2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\Day2-Task2.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\Day2-Task2.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\Day2-Task2.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\Day2-Task2.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\bin\Debug\net8.0\Day2-Task2.exe
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\bin\Debug\net8.0\Day2-Task2.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\bin\Debug\net8.0\Day2-Task2.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\bin\Debug\net8.0\Day2-Task2.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\bin\Debug\net8.0\Day2-Task2.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\Day2-Task2.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\refint\Day2-Task2.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\Day2-Task2.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\Day2-Task2.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day2-Task2\obj\Debug\net8.0\ref\Day2-Task2.dll

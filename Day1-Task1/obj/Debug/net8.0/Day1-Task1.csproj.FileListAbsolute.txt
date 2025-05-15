@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\Day1-Task1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\Day1-Task1.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\Day1-Task1.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\Day1-Task1.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\Day1-Task1.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\bin\Debug\net8.0\Day1-Task1.exe
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\bin\Debug\net8.0\Day1-Task1.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\bin\Debug\net8.0\Day1-Task1.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\bin\Debug\net8.0\Day1-Task1.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\bin\Debug\net8.0\Day1-Task1.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\Day1-Task1.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\refint\Day1-Task1.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\Day1-Task1.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\Day1-Task1.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day1-Task1\obj\Debug\net8.0\ref\Day1-Task1.dll

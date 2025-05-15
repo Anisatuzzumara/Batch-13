@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\BirdKind.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\BirdKind.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\BirdKind.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\BirdKind.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\BirdKind.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\bin\Debug\net8.0\BirdKind.exe
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\bin\Debug\net8.0\BirdKind.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\bin\Debug\net8.0\BirdKind.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\bin\Debug\net8.0\BirdKind.dll
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\bin\Debug\net8.0\BirdKind.pdb
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\BirdKind.dll
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\refint\BirdKind.dll
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\BirdKind.pdb
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\BirdKind.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\BirdKind\obj\Debug\net8.0\ref\BirdKind.dll
