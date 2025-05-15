@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\NilaiMahasiswa.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\NilaiMahasiswa.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\NilaiMahasiswa.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\NilaiMahasiswa.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\NilaiMahasiswa.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\bin\Debug\net8.0\NilaiMahasiswa.exe
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\bin\Debug\net8.0\NilaiMahasiswa.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\bin\Debug\net8.0\NilaiMahasiswa.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\bin\Debug\net8.0\NilaiMahasiswa.dll
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\bin\Debug\net8.0\NilaiMahasiswa.pdb
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\NilaiMahasiswa.dll
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\refint\NilaiMahasiswa.dll
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\NilaiMahasiswa.pdb
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\NilaiMahasiswa.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\NilaiMahasiswa\obj\Debug\net8.0\ref\NilaiMahasiswa.dll
