@@ -8,7 +8,7 @@ namespace Mahasiswa
         public string Nama { get; set; }
         public int Nilai { get; set; }
 
-        public NilaiMhs(string nama, int nilai)
+        public NilaiMhs(string nama, int nilai)// constructor
         {
             Nama = nama;
             Nilai = nilai;
@@ -29,7 +29,7 @@ namespace Mahasiswa
 
         }
     }
-    class Hasil
+    public class Hasil
     {
         static void Main(string[] args)
         {

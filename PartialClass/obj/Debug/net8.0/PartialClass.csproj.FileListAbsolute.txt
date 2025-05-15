@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\PartialClass.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\PartialClass.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\PartialClass.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\PartialClass.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\PartialClass.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\bin\Debug\net8.0\PartialClass.exe
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\bin\Debug\net8.0\PartialClass.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\bin\Debug\net8.0\PartialClass.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\bin\Debug\net8.0\PartialClass.dll
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\bin\Debug\net8.0\PartialClass.pdb
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\PartialClass.dll
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\refint\PartialClass.dll
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\PartialClass.pdb
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\PartialClass.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\PartialClass\obj\Debug\net8.0\ref\PartialClass.dll
