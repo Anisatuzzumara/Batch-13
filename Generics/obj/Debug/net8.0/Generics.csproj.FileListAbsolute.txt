@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Generics\bin\Debug\net8.0\Generics.exe
+C:\Users\Anisazumara\Documents\Batch 13\Generics\bin\Debug\net8.0\Generics.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Generics\bin\Debug\net8.0\Generics.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Generics\bin\Debug\net8.0\Generics.dll
+C:\Users\Anisazumara\Documents\Batch 13\Generics\bin\Debug\net8.0\Generics.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\Generics.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\Generics.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\Generics.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\Generics.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\Generics.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\Generics.dll
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\refint\Generics.dll
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\Generics.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\Generics.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Generics\obj\Debug\net8.0\ref\Generics.dll
