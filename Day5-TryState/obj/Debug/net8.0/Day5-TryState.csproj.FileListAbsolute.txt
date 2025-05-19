@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\bin\Debug\net8.0\Day5-TryState.exe
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\bin\Debug\net8.0\Day5-TryState.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\bin\Debug\net8.0\Day5-TryState.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\bin\Debug\net8.0\Day5-TryState.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\bin\Debug\net8.0\Day5-TryState.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\Day5-TryState.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\Day5-TryState.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\Day5-TryState.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\Day5-TryState.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\Day5-TryState.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\Day5-TryState.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\refint\Day5-TryState.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\Day5-TryState.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\Day5-TryState.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5-TryState\obj\Debug\net8.0\ref\Day5-TryState.dll
