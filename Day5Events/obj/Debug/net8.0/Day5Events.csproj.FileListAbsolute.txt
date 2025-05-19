@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\Day5Events.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\Day5Events.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\Day5Events.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\Day5Events.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\Day5Events.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\bin\Debug\net8.0\Day5Events.exe
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\bin\Debug\net8.0\Day5Events.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\bin\Debug\net8.0\Day5Events.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\bin\Debug\net8.0\Day5Events.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\bin\Debug\net8.0\Day5Events.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\Day5Events.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\refint\Day5Events.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\Day5Events.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\Day5Events.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5Events\obj\Debug\net8.0\ref\Day5Events.dll

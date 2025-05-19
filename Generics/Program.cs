@@ -20,6 +20,7 @@ namespace GeneRic
             p.Display<int>("Number", 2908534);
             p.Display<char>("Character", 'A');
             p.Display<double>("Decimal", 10.9);
+            
             return 0;
         }
     }

@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\Event.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\Event.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\Event.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\Event.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\Event.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Event\bin\Debug\net8.0\Event.exe
+C:\Users\Anisazumara\Documents\Batch 13\Event\bin\Debug\net8.0\Event.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Event\bin\Debug\net8.0\Event.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Event\bin\Debug\net8.0\Event.dll
+C:\Users\Anisazumara\Documents\Batch 13\Event\bin\Debug\net8.0\Event.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\Event.dll
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\refint\Event.dll
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\Event.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\Event.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Event\obj\Debug\net8.0\ref\Event.dll

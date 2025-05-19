@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\bin\Debug\net8.0\Day5Example.exe
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\bin\Debug\net8.0\Day5Example.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\bin\Debug\net8.0\Day5Example.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\bin\Debug\net8.0\Day5Example.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\bin\Debug\net8.0\Day5Example.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\Day5Example.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\Day5Example.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\Day5Example.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\Day5Example.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\Day5Example.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\Day5Example.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\refint\Day5Example.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\Day5Example.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\Day5Example.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day5Example\obj\Debug\net8.0\ref\Day5Example.dll
