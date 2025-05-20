@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\bin\Debug\net8.0\IteratorsExample.exe
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\bin\Debug\net8.0\IteratorsExample.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\bin\Debug\net8.0\IteratorsExample.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\bin\Debug\net8.0\IteratorsExample.dll
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\bin\Debug\net8.0\IteratorsExample.pdb
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\IteratorsExample.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\IteratorsExample.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\IteratorsExample.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\IteratorsExample.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\IteratorsExample.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\IteratorsExample.dll
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\refint\IteratorsExample.dll
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\IteratorsExample.pdb
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\IteratorsExample.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\IteratorsExample\obj\Debug\net8.0\ref\IteratorsExample.dll

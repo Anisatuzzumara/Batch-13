@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\TryCatchExample.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\TryCatchExample.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\TryCatchExample.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\TryCatchExample.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\TryCatchExample.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\bin\Debug\net8.0\TryCatchExample.exe
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\bin\Debug\net8.0\TryCatchExample.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\bin\Debug\net8.0\TryCatchExample.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\bin\Debug\net8.0\TryCatchExample.dll
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\bin\Debug\net8.0\TryCatchExample.pdb
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\TryCatchExample.dll
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\refint\TryCatchExample.dll
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\TryCatchExample.pdb
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\TryCatchExample.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\TryCatchExample\obj\Debug\net8.0\ref\TryCatchExample.dll

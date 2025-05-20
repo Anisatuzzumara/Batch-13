@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\Day6OperatorOverloading.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\Day6OperatorOverloading.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\Day6OperatorOverloading.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\Day6OperatorOverloading.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\Day6OperatorOverloading.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\bin\Debug\net8.0\Day6OperatorOverloading.exe
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\bin\Debug\net8.0\Day6OperatorOverloading.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\bin\Debug\net8.0\Day6OperatorOverloading.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\bin\Debug\net8.0\Day6OperatorOverloading.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\bin\Debug\net8.0\Day6OperatorOverloading.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\Day6OperatorOverloading.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\refint\Day6OperatorOverloading.dll
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\Day6OperatorOverloading.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\Day6OperatorOverloading.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Day6OperatorOverloading\obj\Debug\net8.0\ref\Day6OperatorOverloading.dll
