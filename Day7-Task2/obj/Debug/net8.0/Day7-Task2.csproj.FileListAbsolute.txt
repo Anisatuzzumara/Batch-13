@@ -1,0 +1,14 @@
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\bin\Debug\net8.0\Day7-Task2.exe
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\bin\Debug\net8.0\Day7-Task2.deps.json
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\bin\Debug\net8.0\Day7-Task2.runtimeconfig.json
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\bin\Debug\net8.0\Day7-Task2.dll
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\bin\Debug\net8.0\Day7-Task2.pdb
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\Day7-Task2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\Day7-Task2.AssemblyInfoInputs.cache
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\Day7-Task2.AssemblyInfo.cs
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\Day7-Task2.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\Day7-Task2.dll
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\refint\Day7-Task2.dll
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\Day7-Task2.pdb
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\Day7-Task2.genruntimeconfig.cache
+C:\Users\Admin\Documents\Bootcamp\coubaa\Day7-Task2\obj\Debug\net8.0\ref\Day7-Task2.dll
