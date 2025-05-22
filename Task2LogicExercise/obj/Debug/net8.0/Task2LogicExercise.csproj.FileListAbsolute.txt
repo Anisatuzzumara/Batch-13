@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\Task2LogicExercise.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\Task2LogicExercise.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\Task2LogicExercise.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\Task2LogicExercise.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\Task2LogicExercise.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\bin\Debug\net8.0\Task2LogicExercise.exe
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\bin\Debug\net8.0\Task2LogicExercise.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\bin\Debug\net8.0\Task2LogicExercise.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\bin\Debug\net8.0\Task2LogicExercise.dll
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\bin\Debug\net8.0\Task2LogicExercise.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\Task2LogicExercise.dll
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\refint\Task2LogicExercise.dll
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\Task2LogicExercise.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\Task2LogicExercise.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Task2LogicExercise\obj\Debug\net8.0\ref\Task2LogicExercise.dll

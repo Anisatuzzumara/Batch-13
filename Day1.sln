@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IteratorsExample", "Iterato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryCatchExample", "TryCatchExample\TryCatchExample.csproj", "{C8593F51-A48C-42DB-BA84-413D36317597}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2LogicExercise", "Task2LogicExercise\Task2LogicExercise.csproj", "{D26AFEE8-F4BA-4BDE-9312-6EDD7F8CD807}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,5 +170,9 @@ Global
 		{C8593F51-A48C-42DB-BA84-413D36317597}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8593F51-A48C-42DB-BA84-413D36317597}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8593F51-A48C-42DB-BA84-413D36317597}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26AFEE8-F4BA-4BDE-9312-6EDD7F8CD807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26AFEE8-F4BA-4BDE-9312-6EDD7F8CD807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26AFEE8-F4BA-4BDE-9312-6EDD7F8CD807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26AFEE8-F4BA-4BDE-9312-6EDD7F8CD807}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
