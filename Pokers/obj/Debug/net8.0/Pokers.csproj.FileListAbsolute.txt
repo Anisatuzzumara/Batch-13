@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\bin\Debug\net8.0\Pokers.exe
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\bin\Debug\net8.0\Pokers.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\bin\Debug\net8.0\Pokers.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\bin\Debug\net8.0\Pokers.dll
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\bin\Debug\net8.0\Pokers.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\Pokers.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\Pokers.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\Pokers.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\Pokers.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\Pokers.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\Pokers.dll
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\refint\Pokers.dll
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\Pokers.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\Pokers.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Pokers\obj\Debug\net8.0\ref\Pokers.dll
