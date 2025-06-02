@@ -1,177 +1,171 @@
-﻿// See https://aka.ms/new-console-template for more information
-// See https://aka.ms/new-console-template for more information
-
-using System;
-using System.Collections.Generic;
-using Poker.Interfaces;
-using Poker.Classes;
+﻿using Poker.Classes;
 using Poker.Enumerations;
 using Poker.Games;
+using Poker.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
-class Program
+namespace Poker
 {
-    static void Main(string[] args)
+    class Program
     {
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-        IDeck deck = new Deck();
-        ITable table = new Table();
-        IPot pot = new Pot(0);
-        var game = new GameController(10, 20, 20, deck, table, pot);
-
-        Console.WriteLine("Masukkan jumlah pemain (2-4):");
-        int playerCount = int.Parse(Console.ReadLine() ?? "2");
-        for (int i = 0; i < playerCount; i++)
+        static void Main()
         {
-            Console.Write($"Masukkan nama pemain {i + 1}: ");
-            string name = Console.ReadLine() ?? $"Player{i + 1}";
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            Console.Write($"Masukkan jumlah chips untuk {name}: ");
-            int chips = int.Parse(Console.ReadLine() ?? "1000");
+            // Inisialisasi komponen permainan
+            IDeck deck = new Deck();
+            ITable table = new Table();
+            IPot pot = new Pot(0);
+            GameController game = new GameController(10, 20, 20, deck, table, pot);
 
-            IPlayer player = new Player(name, chips);
-            game.SeatPlayer(player);
-        }
+            // Tambahkan pemain
+            Console.Write("Masukkan jumlah pemain (2-4): ");
+            int numPlayers = int.Parse(Console.ReadLine() ?? "2");
 
-        game.StartGame();
-        game.PostBlinds();
-
-        foreach (var player in game.GetSeatedPlayers())
-        {
-            Console.WriteLine($"\nKartu untuk {player.GetName()}: (Chips: {player.GetChips()})");
-            PrintHandWithComplexBorder(player.GetHand());
-        }
-
-        // Flop
-        game.DealCommunityCards(BettingRoundType.Flop);
-        Console.WriteLine("\nFlop:");
-        PrintHandWithComplexBorder(table.GetCommunityCards());
-
-        // Turn
-        game.DealCommunityCards(BettingRoundType.Turn);
-        Console.WriteLine("\nTurn:");
-        PrintHandWithComplexBorder(table.GetCommunityCards());
-
-        // River
-        game.DealCommunityCards(BettingRoundType.River);
-        Console.WriteLine("\nRiver:");
-        PrintHandWithComplexBorder(table.GetCommunityCards());
-
-        // Aksi pemain
-        foreach (var player in game.GetSeatedPlayers())
-        {
-            Console.WriteLine($"\nGiliran {player.GetName()} (Chips: {player.GetChips()}):");
-            Console.WriteLine("Pilih aksi: 1. Fold  2. Call  3. Raise");
-            string? actionInput = Console.ReadLine();
-            ActionType action = actionInput switch
+            for (int i = 1; i <= numPlayers; i++)
             {
-                "1" => ActionType.Fold,
-                "2" => ActionType.Call,
-                "3" => ActionType.Raise,
-                _ => ActionType.Check
-            };
-            int amount = 0;
-            if (action == ActionType.Call || action == ActionType.Raise)
-            {
-                Console.Write("Masukkan jumlah taruhan: ");
-                amount = int.Parse(Console.ReadLine() ?? "0");
+                Console.Write($"Nama pemain {i}: ");
+                string name = Console.ReadLine() ?? $"Pemain{i}";
+                game.SeatPlayer(new Player(name, 500));
             }
 
-            game.HandlePlayerAction(player, action, amount);
+            Console.Clear();
+            game.StartGame();
+            game.PostBlinds();
+
+            Console.WriteLine("=== Pre-Flop ===");
+            DisplayHands(game);
+            DisplayPot(pot);
+
+            RunBettingRound(game, pot);
+
+            Console.WriteLine("\n=== Flop ===");
+            game.StartNewRound(); // Flop
+            DisplayCommunityCards(table);
+            RunBettingRound(game, pot);
+
+            Console.WriteLine("\n=== Turn ===");
+            game.StartNewRound(); // Turn
+            DisplayCommunityCards(table);
+            RunBettingRound(game, pot);
+
+            Console.WriteLine("\n=== River ===");
+            game.StartNewRound(); // River
+            DisplayCommunityCards(table);
+            RunBettingRound(game, pot);
+
+            Console.WriteLine("\n=== Showdown ===");
+            DisplayHands(game);
+            var winners = game.FindWinners(game.GetSeatedPlayers(), table.GetCommunityCards());
+            Console.WriteLine("Pemenang:");
+            foreach (var winner in winners)
+                Console.WriteLine($"🏆 {winner.GetName()} memenangkan pot!");
+
+            game.AwardPot(winners.Cast<Poker.Interfaces.IPlayer>().ToList());
+            DisplayPot(pot);
         }
 
-        var winners = game.FindWinners(game.GetSeatedPlayers(), table.GetCommunityCards());
-        game.AwardPot(winners.ConvertAll<IPlayer>(w => w));
-
-        Console.WriteLine("\nPemenang:");
-        foreach (var winner in winners)
-            Console.WriteLine($"{winner.GetName()} memenangkan pot! (Total chips: {winner.GetChips()})");
-    }
-
-    static void PrintHandWithComplexBorder(IEnumerable<ICard> hand)
-    {
-        var cards = new List<ICard>(hand);
-
-        foreach (var card in cards)
-            Console.Write("┌───────┐ ");
-        Console.WriteLine();
-
-        foreach (var card in cards)
+        static void RunBettingRound(GameController game, IPot pot)
         {
-            string valueStr = card.Value.ToString();
-            if (valueStr.Length > 2) valueStr = valueStr[..2];
-            SetCardColor(card);
-            Console.Write($"│{valueStr,-2}     │");
-            Console.ResetColor();
-            Console.Write(" ");
+            foreach (var player in game.GetSeatedPlayers())
+            {
+                if (player.IsFolded()) continue;
+
+                Console.WriteLine($"\n{player.GetName()} (Chips: {player.GetChips()}) - Giliran Anda!");
+                Console.Write("Aksi (fold, call, raise): ");
+                string action = Console.ReadLine()?.ToLower() ?? "call";
+                ActionType type = ActionType.Call;
+                int amount = 0;
+
+                switch (action)
+                {
+                    case "fold":
+                        type = ActionType.Fold;
+                        break;
+                    case "raise":
+                        type = ActionType.Raise;
+                        Console.Write("Jumlah raise: ");
+                        amount = int.Parse(Console.ReadLine() ?? "20");
+                        break;
+                    default:
+                        type = ActionType.Call;
+                        amount = 20;
+                        break;
+                }
+
+                game.HandlePlayerAction(player, type, amount);
+            }
+
+            DisplayPot(pot);
         }
-        Console.WriteLine();
 
-        foreach (var card in cards)
+        static void DisplayHands(GameController game)
         {
-            SetCardColor(card);
-            Console.Write("│       │");
-            Console.ResetColor();
-            Console.Write(" ");
+            foreach (var player in game.GetSeatedPlayers())
+            {
+                Console.WriteLine($"\n{player.GetName()} {(player.IsFolded() ? "[Folded]" : "")}:");
+                PrintHandWithVisual(player.GetHand());
+            }
         }
-        Console.WriteLine();
 
-        foreach (var card in cards)
+        static void DisplayCommunityCards(ITable table)
         {
-            string symbol = card.GetSuit() switch
+            Console.WriteLine("Kartu di meja:");
+            PrintHandWithVisual(table.GetCommunityCards());
+        }
+
+        static void DisplayPot(IPot pot)
+        {
+            Console.WriteLine($"\nTotal Pot: {pot.GetAmount()} chips\n");
+        }
+
+        static void PrintHandWithVisual(List<Poker.Interfaces.ICard> cards)
+        {
+            foreach (var card in cards)
+            {
+                PrintCard(card);
+                Thread.Sleep(100); // efek visual
+            }
+            Console.WriteLine();
+        }
+
+        static void PrintCard(Poker.Interfaces.ICard card)
+        {
+            string symbol = card.Suit switch
             {
                 Suit.Hearts => "♥",
+                Suit.Spades => "♠",
                 Suit.Diamonds => "♦",
                 Suit.Clubs => "♣",
-                Suit.Spades => "♠",
                 _ => "?"
             };
-            SetCardColor(card);
-            Console.Write($"│   {symbol}   │");
-            Console.ResetColor();
-            Console.Write(" ");
-        }
-        Console.WriteLine();
 
-        foreach (var card in cards)
-        {
-            SetCardColor(card);
-            Console.Write("│       │");
-            Console.ResetColor();
-            Console.Write(" ");
-        }
-        Console.WriteLine();
-
-        foreach (var card in cards)
-        {
-            string valueStr = card.Value.ToString();
-            if (valueStr.Length > 2) valueStr = valueStr[..2];
-            SetCardColor(card);
-            Console.Write($"│     {valueStr,2}│");
-            Console.ResetColor();
-            Console.Write(" ");
-        }
-        Console.WriteLine();
-
-        foreach (var card in cards)
-            Console.Write("└───────┘ ");
-        Console.WriteLine();
-    }
-
-    static void SetCardColor(ICard card)
-    {
-        switch (card.GetSuit())
-        {
-            case Suit.Hearts:
-            case Suit.Diamonds:
-                Console.BackgroundColor = ConsoleColor.White;
+            ConsoleColor original = Console.ForegroundColor;
+            if (card.Suit == Suit.Hearts || card.Suit == Suit.Diamonds)
                 Console.ForegroundColor = ConsoleColor.Red;
-                break;
-            case Suit.Clubs:
-            case Suit.Spades:
-                Console.BackgroundColor = ConsoleColor.DarkGray;
-                Console.ForegroundColor = ConsoleColor.Black;
-                break;
+            else
+                Console.ForegroundColor = ConsoleColor.White;
+
+            string val = card.Value switch
+            {
+                CardValue.Ace => "A",
+                CardValue.King => "K",
+                CardValue.Queen => "Q",
+                CardValue.Jack => "J",
+                _ => ((int)card.Value).ToString()
+            };
+
+            string cardString = $"┌────┐\n" +
+                                $"│{val,-2}  │\n" +
+                                $"│ {symbol}  │\n" +
+                                $"│  {val,2}│\n" +
+                                $"└────┘";
+
+            Console.WriteLine(cardString);
+            Console.ForegroundColor = original;
         }
     }
 }
