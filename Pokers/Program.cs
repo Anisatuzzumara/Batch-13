@@ -42,22 +42,22 @@ namespace Poker
 
             RunBettingRound(game, pot);
 
-            Console.WriteLine("\n=== Flop ===");
+            Console.Write("\n=== Flop ===");
             game.StartNewRound(); // Flop
             DisplayCommunityCards(table);
             RunBettingRound(game, pot);
 
-            Console.WriteLine("\n=== Turn ===");
+            Console.Write("\n=== Turn ===");
             game.StartNewRound(); // Turn
             DisplayCommunityCards(table);
             RunBettingRound(game, pot);
 
-            Console.WriteLine("\n=== River ===");
+            Console.Write("\n=== River ===");
             game.StartNewRound(); // River
             DisplayCommunityCards(table);
             RunBettingRound(game, pot);
 
-            Console.WriteLine("\n=== Showdown ===");
+            Console.Write("\n=== Showdown ===");
             DisplayHands(game);
             var winners = game.FindWinners(game.GetSeatedPlayers(), table.GetCommunityCards());
             Console.WriteLine("Pemenang:");
@@ -127,7 +127,6 @@ namespace Poker
             foreach (var card in cards)
             {
                 PrintCard(card);
-                Thread.Sleep(100); // efek visual
             }
             Console.WriteLine();
         }

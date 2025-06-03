@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\bin\Debug\net8.0\ExampleThread.exe
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\bin\Debug\net8.0\ExampleThread.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\bin\Debug\net8.0\ExampleThread.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\bin\Debug\net8.0\ExampleThread.dll
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\bin\Debug\net8.0\ExampleThread.pdb
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ExampleThread.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ExampleThread.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ExampleThread.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ExampleThread.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ExampleThread.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ExampleThread.dll
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\refint\ExampleThread.dll
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ExampleThread.pdb
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ExampleThread.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\ExampleThread\obj\Debug\net8.0\ref\ExampleThread.dll

@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\bin\Debug\net8.0\FinalLgicExercise.exe
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\bin\Debug\net8.0\FinalLgicExercise.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\bin\Debug\net8.0\FinalLgicExercise.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\bin\Debug\net8.0\FinalLgicExercise.dll
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\bin\Debug\net8.0\FinalLgicExercise.pdb
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\FinalLgicExercise.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\FinalLgicExercise.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\FinalLgicExercise.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\FinalLgicExercise.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\FinalLgicExercise.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\FinalLgicExercise.dll
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\refint\FinalLgicExercise.dll
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\FinalLgicExercise.pdb
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\FinalLgicExercise.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\FinalLgicExercise\obj\Debug\net8.0\ref\FinalLgicExercise.dll

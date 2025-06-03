@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "FinalLgicExercise/1.0.0": {
+        "runtime": {
+          "FinalLgicExercise.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FinalLgicExercise/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

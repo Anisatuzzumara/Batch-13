@@ -239,13 +239,17 @@ namespace Poker.Games
 
         public void ManageRoundActions(PlayerAction action)
         {
-            HandlePlayerAction(action.Player, action.Action, action.Amount);
+            if (action.Player != null)
+            {
+                HandlePlayerAction(action.Player, action.Action, action.Amount);
+            }
+            // Optionally, handle the case where action.Player is null (e.g., log or throw an exception)
         }
     }
 
     public class PlayerAction
     {
-        public Player Player { get; set; }
+        public Player? Player { get; set; }
         public ActionType Action { get; set; }
         public int Amount { get; set; }
     }
