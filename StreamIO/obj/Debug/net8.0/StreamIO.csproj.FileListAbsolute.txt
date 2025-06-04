@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\bin\Debug\net8.0\StreamIO.exe
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\bin\Debug\net8.0\StreamIO.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\bin\Debug\net8.0\StreamIO.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\bin\Debug\net8.0\StreamIO.dll
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\bin\Debug\net8.0\StreamIO.pdb
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\StreamIO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\StreamIO.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\StreamIO.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\StreamIO.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\StreamIO.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\StreamIO.dll
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\refint\StreamIO.dll
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\StreamIO.pdb
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\StreamIO.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\StreamIO\obj\Debug\net8.0\ref\StreamIO.dll

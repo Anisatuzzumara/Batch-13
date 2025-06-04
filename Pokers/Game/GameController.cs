@@ -124,6 +124,7 @@ namespace Poker.Games
             _currentBet = 0;
             CurrentRoundActions.Clear();
             // Tambahkan logika betting round di sini jika perlu
+            
         }
 
         public PlayerAction RequestPlayerAction(int currentBet, int minRaise, int potSize, List<ICard> communityCards)

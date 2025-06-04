@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\bin\Debug\net8.0\StreamWR.exe
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\bin\Debug\net8.0\StreamWR.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\bin\Debug\net8.0\StreamWR.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\bin\Debug\net8.0\StreamWR.dll
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\bin\Debug\net8.0\StreamWR.pdb
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\StreamWR.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\StreamWR.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\StreamWR.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\StreamWR.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\StreamWR.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\StreamWR.dll
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\refint\StreamWR.dll
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\StreamWR.pdb
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\StreamWR.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\StreamWR\obj\Debug\net8.0\ref\StreamWR.dll

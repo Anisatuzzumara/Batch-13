@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\bin\Debug\net8.0\Serialization.exe
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\bin\Debug\net8.0\Serialization.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\bin\Debug\net8.0\Serialization.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\bin\Debug\net8.0\Serialization.dll
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\bin\Debug\net8.0\Serialization.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\Serialization.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\Serialization.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\Serialization.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\Serialization.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\Serialization.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\Serialization.dll
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\refint\Serialization.dll
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\Serialization.pdb
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\Serialization.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\Serialization\obj\Debug\net8.0\ref\Serialization.dll

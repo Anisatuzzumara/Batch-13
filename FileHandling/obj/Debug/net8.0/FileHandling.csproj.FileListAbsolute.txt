@@ -1,0 +1,15 @@
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\bin\Debug\net8.0\FileHandling.exe
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\bin\Debug\net8.0\FileHandling.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\bin\Debug\net8.0\FileHandling.runtimeconfig.json
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\bin\Debug\net8.0\FileHandling.dll
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\bin\Debug\net8.0\FileHandling.pdb
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\FileHandling.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\FileHandling.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\FileHandling.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\FileHandling.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\FileHandling.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\FileHandling.dll
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\refint\FileHandling.dll
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\FileHandling.pdb
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\FileHandling.genruntimeconfig.cache
+C:\Users\Anisazumara\Documents\Batch 13\FileHandling\obj\Debug\net8.0\ref\FileHandling.dll
