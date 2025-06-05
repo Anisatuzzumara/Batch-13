@@ -6,6 +6,12 @@ namespace Poker.Interfaces
     {
         Suit Suit { get; }
         CardValue Value { get; }
+        HandRank Rank { get;} 
+
+        // Methods
+        HandRank GetRank();
+        Suit GetSuit();
+        CardValue GetValue();
         string ToString();
     }
 }

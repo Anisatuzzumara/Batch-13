@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Poker.Interfaces;
-using Poker.Classes;
-using Poker.Enumerations;
-
 namespace Poker.Games
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Poker.Interfaces;
+    using Poker.Classes;
+    using Poker.Enumerations;
+
     public class GameController
     {
         private List<IPlayer> _players = new();
         private IDeck _deck;
         private ITable _table;
-        private readonly IPot _pot;
+        private IPot _pot;
         private IPlayer? _dealerPlayer;
         private int _smallBlindAmount;
         private int _bigBlindAmount;
@@ -23,16 +23,21 @@ namespace Poker.Games
         public Action<List<ICard>>? OnCommunityCardsRevealed;
         public Action<IPlayer, ActionType, int>? OnPlayerActionTaken;
         public List<(Player player, ActionType action, int amount)> CurrentRoundActions { get; private set; } = new();
+        public int BigBlind { get; internal set; }
+        public int MinRaise => _minRaise; 
+
+        public int CurrentMaxBet { get;  set; }
 
         public GameController(int smallBlindAmt, int bigBlindAmt, int minRaise, IDeck deck, ITable table, IPot pot)
         {
-            _smallBlindAmount = smallBlindAmt;
-            _bigBlindAmount = bigBlindAmt;
-            _minRaise = minRaise;
+            _smallBlindAmount = 100;
+            _bigBlindAmount = 1000;
+            _minRaise = 100;
             _deck = deck;
             _table = table;
             _pot = pot;
         }
+
 
         public void StartGame()
         {
@@ -64,6 +69,7 @@ namespace Poker.Games
             DealHoleCards();
         }
 
+
         public void SeatPlayer(IPlayer player) => _players.Add(player);
         public void RemovePlayer(IPlayer player) => _players.Remove(player);
 
@@ -77,19 +83,27 @@ namespace Poker.Games
         public void AssignBlindsAndPositions()
         {
             if (_dealerPlayer == null)
-                return;
+            return;
             var dealerIndex = _players.IndexOf(_dealerPlayer);
-            for (int i = 0; i < _players.Count; i++)
+            int count = _players.Count;
+            for (int i = 0; i < count; i++)
             {
-                var position = (i - dealerIndex + _players.Count) % _players.Count;
-                if (position == 1)
-                    _players[i].SetPosition(Position.Small_Blind);
-                else if (position == 2)
-                    _players[i].SetPosition(Position.Big_Blind);
-                else
-                    _players[i].SetPosition(Position.Middle_Position); // fallback
+            var position = (i - dealerIndex + count) % count;
+            if (position == 0)
+                _players[i].SetPosition(Position.Dealer);
+            else if (position == 1)
+                _players[i].SetPosition(Position.Small_Blind);
+            else if (position == 2)
+                _players[i].SetPosition(Position.Big_Blind);
+            else if (position == 3)
+                _players[i].SetPosition(Position.Early_Position);
+            else if (position == count - 1)
+                _players[i].SetPosition(Position.Middle_Position);
+            else
+                _players[i].SetPosition(Position.Late_Position);
             }
         }
+
 
         public void PostBlinds()
         {
@@ -98,6 +112,8 @@ namespace Poker.Games
                 var pos = player.GetPosition();
                 if (pos == Position.Small_Blind)
                     player.SetChips(player.GetChips() - _smallBlindAmount);
+                if (pos == Position.Dealer)
+                    player.SetChips(player.GetChips() - _smallBlindAmount); // or use a specific dealer blind amount if needed
                 else if (pos == Position.Big_Blind)
                     player.SetChips(player.GetChips() - _bigBlindAmount);
             }
@@ -109,6 +125,7 @@ namespace Poker.Games
             player.GetHand().Clear();
             return cards;
         }
+
 
         public void AddPlayerChips(IPlayer player, int amount) => player.SetChips(player.GetChips() + amount);
 
@@ -124,7 +141,6 @@ namespace Poker.Games
             _currentBet = 0;
             CurrentRoundActions.Clear();
             // Tambahkan logika betting round di sini jika perlu
-            
         }
 
         public PlayerAction RequestPlayerAction(int currentBet, int minRaise, int potSize, List<ICard> communityCards)
@@ -137,8 +153,32 @@ namespace Poker.Games
         {
             if (action == ActionType.Fold)
                 ProcessFold(player);
-            else if (action == ActionType.Call || action == ActionType.Raise || action == ActionType.Bet)
+            else if (action == ActionType.Call || action == ActionType.Raise || action == ActionType.Bet || action == ActionType.AllIn || action == ActionType.Check)
             {
+                // Validation is handled below.
+            }
+            else
+            {
+                throw new InvalidOperationException($"Unknown action type: {action}");
+            }
+            {
+                if (player.IsFolded())
+                    throw new InvalidOperationException("Cannot take action on a folded player.");
+
+                if (amount < 0)
+                    throw new ArgumentOutOfRangeException(nameof(amount), "Amount must be non-negative.");
+
+                if (amount > player.GetChips())
+                    throw new InvalidOperationException("Player does not have enough chips to perform this action.");
+
+                if (action == ActionType.Call && amount < _currentBet)
+                    throw new InvalidOperationException($"Call amount must be at least the current bet: {_currentBet}");
+            }
+            {
+                // Enforce minimum raise
+                if (action == ActionType.Raise && amount < _minRaise)
+                    throw new InvalidOperationException($"Raise amount must be at least the minimum raise: {_minRaise}");
+
                 player.SetChips(player.GetChips() - amount);
                 player.SetCurrentBetInRound(player.GetCurrentBetInRound() + amount);
                 _pot.SetPot(_pot.GetAmount() + amount);
@@ -161,6 +201,7 @@ namespace Poker.Games
             }
         }
 
+
         public void DealCommunityCards(BettingRoundType round)
         {
             if (round == BettingRoundType.Flop)
@@ -179,6 +220,7 @@ namespace Poker.Games
             OnCommunityCardsRevealed?.Invoke(_table.GetCommunityCards());
         }
 
+
         public ICard DealCard()
         {
             var card = _deck.GetCards().First();
@@ -191,7 +233,84 @@ namespace Poker.Games
         public HandRank EvaluateHand(List<ICard> holeCards, List<ICard> communityCards)
         {
             var allCards = holeCards.Concat(communityCards).ToList();
-            // Placeholder evaluasi kombinasi kartu
+
+            // Hitung jumlah rank dan suit
+            var rankGroups = allCards.GroupBy(c => c.Rank).OrderByDescending(g => g.Count()).ToList();
+            var suitGroups = allCards.GroupBy(c => c.Suit).ToList();
+
+            bool isFlush = suitGroups.Any(g => g.Count() >= 5);
+            var orderedRanks = allCards.Select(c => (int)c.Rank).Distinct().OrderByDescending(r => r).ToList();
+
+            // Cek Straight
+            bool isStraight = false;
+            int straightHigh = 0;
+            for (int i = 0; i <= orderedRanks.Count - 5; i++)
+            {
+            if (orderedRanks[i] - orderedRanks[i + 4] == 4)
+            {
+                isStraight = true;
+                straightHigh = orderedRanks[i];
+                break;
+            }
+            }
+            // Cek straight low-Ace (A,2,3,4,5)
+            if (!isStraight && orderedRanks.Contains(14) && orderedRanks.Contains(2) && orderedRanks.Contains(3) && orderedRanks.Contains(4) && orderedRanks.Contains(5))
+            {
+            isStraight = true;
+            straightHigh = 5;
+            }
+
+            // Cek Royal Flush & Straight Flush
+            if (isFlush)
+            {
+            foreach (var suitGroup in suitGroups.Where(g => g.Count() >= 5))
+            {
+                var flushRanks = suitGroup.Select(c => (int)c.Rank).Distinct().OrderByDescending(r => r).ToList();
+                // Cek straight flush
+                for (int i = 0; i <= flushRanks.Count - 5; i++)
+                {
+                if (flushRanks[i] - flushRanks[i + 4] == 4)
+                {
+                    if (flushRanks[i] == 14)
+                    return HandRank.Royal_Flush;
+                    return HandRank.Straight_Flush;
+                }
+                }
+                // Cek straight flush low-Ace
+                if (flushRanks.Contains(14) && flushRanks.Contains(2) && flushRanks.Contains(3) && flushRanks.Contains(4) && flushRanks.Contains(5))
+                return HandRank.Straight_Flush;
+            }
+            }
+
+            // Four of a Kind
+            if (rankGroups.Any(g => g.Count() == 4))
+            return HandRank.Four_of_a_Kind;
+
+            // Full House
+            if (rankGroups.Any(g => g.Count() == 3) && rankGroups.Any(g => g.Count() == 2))
+            return HandRank.Full_House;
+
+            // Flush
+            if (isFlush)
+            return HandRank.Flush;
+
+            // Straight
+            if (isStraight)
+            return HandRank.Straight;
+
+            // Three of a Kind
+            if (rankGroups.Any(g => g.Count() == 3))
+            return HandRank.Three_of_a_Kind;
+
+            // Two Pair
+            if (rankGroups.Count(g => g.Count() == 2) >= 2)
+            return HandRank.Two_Pairs;
+
+            // One Pair
+            if (rankGroups.Any(g => g.Count() == 2))
+            return HandRank.One_Pair;
+
+            // High Card
             return HandRank.No_Pair;
         }
 
@@ -206,6 +325,7 @@ namespace Poker.Games
             var bestRank = ranked.First().Rank;
             return ranked.Where(x => x.Rank == bestRank).Select(x => x.Player).ToList();
         }
+
 
         public void AwardPot(List<IPlayer> winners)
         {
@@ -223,14 +343,32 @@ namespace Poker.Games
             ClearCommunityCards();
         }
 
+
         public List<ICard> GetAllCards(List<ICard> communityCards)
         {
             var all = new List<ICard>();
             foreach (var p in _players)
-                all.AddRange(p.GetHand());
+            all.AddRange(p.GetHand());
             all.AddRange(communityCards);
             return all;
         }
+
+        // (Assume this is near the end of your GameController class)
+        // Returns a numeric value representing the strength of a hand for comparison
+        public int GetHandValue(List<ICard> playerHand, List<ICard> communityCards)
+        {
+            // Example: Combine all cards and assign a simple value based on sorted ranks
+            var allCards = playerHand.Concat(communityCards).OrderByDescending(c => (int)c.Rank).ToList();
+            int value = 0;
+            int multiplier = 1;
+            foreach (var card in allCards)
+            {
+                value += (int)card.Rank * multiplier;
+                multiplier *= 15; // 13 ranks + buffer
+            }
+        return value;
+        }
+    
 
         public void StartNewRound()
         {
@@ -240,11 +378,7 @@ namespace Poker.Games
 
         public void ManageRoundActions(PlayerAction action)
         {
-            if (action.Player != null)
-            {
-                HandlePlayerAction(action.Player, action.Action, action.Amount);
-            }
-            // Optionally, handle the case where action.Player is null (e.g., log or throw an exception)
+            HandlePlayerAction(action.Player, action.Action, action.Amount);
         }
     }
 
@@ -255,5 +389,3 @@ namespace Poker.Games
         public int Amount { get; set; }
     }
 }
-
-

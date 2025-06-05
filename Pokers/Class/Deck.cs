@@ -15,8 +15,8 @@ namespace Poker.Classes
             cards = new List<ICard>();
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
                 foreach (CardValue value in Enum.GetValues(typeof(CardValue)))
-                    cards.Add(new Card(suit, value));
-
+                    foreach (HandRank rank in Enum.GetValues(typeof(HandRank)))
+                        cards.Add(new Card(suit, value, rank));
         }
 
         public List<ICard> GetCards() => cards;
@@ -36,14 +36,6 @@ namespace Poker.Classes
                 cards[k] = cards[n];
                 cards[n] = value;
             }
-        }
-
-        public ICard Deal()
-        {
-            if (cards.Count == 0) throw new InvalidOperationException("No cards left in the deck.");
-            var card = cards[0];
-            cards.RemoveAt(0);
-            return card;
         }
     }
 }

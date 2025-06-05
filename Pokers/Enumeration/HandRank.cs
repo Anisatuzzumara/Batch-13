@@ -2,15 +2,16 @@ namespace Poker.Enumerations
 {
     public enum HandRank
     {
-        Royal_Flush,
-        Straight_Flush,
-        Four_of_a_Kind,
-        Full_House,
-        Flush,
-        Straight,
-        Three_of_a_Kind,
-        Two_Pairs,
+        No_Pair=1,
         One_Pair,
-        No_Pair
+        Two_Pairs,
+        Three_Pairs,
+        Three_of_a_Kind,
+        Straight,
+        Flush,
+        Full_House,
+        Four_of_a_Kind,
+        Straight_Flush, 
+        Royal_Flush
     }
 }
