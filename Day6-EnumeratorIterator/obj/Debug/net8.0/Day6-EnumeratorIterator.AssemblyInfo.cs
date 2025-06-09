@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Day6-EnumeratorIterator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4c7081373f196220f3265a1632c565c0710528ff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e9c62f5ef8df38ec4c3b0d2660ddc2e11d3b860")]
 [assembly: System.Reflection.AssemblyProductAttribute("Day6-EnumeratorIterator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Day6-EnumeratorIterator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

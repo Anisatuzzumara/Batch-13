@@ -8,7 +8,7 @@ namespace Poker.Interfaces
         string GetName();
         int GetChips();
         void SetChips(int chips);
-        bool IsAllIn();
+
         Position GetPosition();
         void SetPosition(Position position);
         bool IsFolded();
@@ -16,9 +16,7 @@ namespace Poker.Interfaces
         int GetCurrentBetInRound();
         void SetCurrentBetInRound(int currentBetInRound);
         List<ICard> GetHand();
-        public Position Position { get; set; }
-        HandRank HandRank { get; set; }
-        int BestHandValue { get; set; }
-
+        void AddCardToHand(ICard card);
+       
     }
 }

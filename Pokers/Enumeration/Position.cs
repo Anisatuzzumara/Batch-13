@@ -2,6 +2,7 @@ namespace Poker.Enumerations
 {
     public enum Position
     {
+        None, // Penambahan posisi None untuk menghindari null reference
         Dealer,
         Small_Blind,
         Big_Blind,

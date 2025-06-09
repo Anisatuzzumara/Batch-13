@@ -4,6 +4,7 @@ namespace Poker.Interfaces
     {
         void SetPot(int amount);
         int GetAmount();
+        void AddToPot(int amount);
         
     }
 }

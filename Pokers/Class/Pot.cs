@@ -14,5 +14,7 @@ namespace Poker.Classes
         public void SetPot(int amount) => Amount = amount;
         public int GetAmount() => Amount;
 
+        public void AddToPot(int amount) => Amount += amount;
+
     }
 }

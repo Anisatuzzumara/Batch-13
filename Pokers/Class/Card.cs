@@ -7,16 +7,12 @@ namespace Poker.Classes
     {
         public Suit Suit { get; }
         public CardValue Value { get; }
-        public HandRank Rank { get; }
-
-        public Card(Suit suit, CardValue value, HandRank rank)
+        public Card(Suit suit, CardValue value)
         {
             Suit = suit;
             Value = value;
-            Rank = rank;
         }
 
-        public HandRank GetRank() => Rank;
         public Suit GetSuit() => Suit;
         public CardValue GetValue() => Value;
         public override string ToString() => $"{Value} of {Suit}";

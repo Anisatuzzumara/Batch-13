@@ -1,0 +1,207 @@
+---
+config:
+  layout: dagre
+---
+classDiagram
+direction TB
+    class ITable {
+	    + setCommunityCard(icard: ICard) : void
+	    + getCommunityCards() : List~ICard~
+    }
+    class Table {
+	    + List~ICard~ communityCards 
+	    + setCommunityCard(icard: ICard) : void
+	    + getCommunityCards() : List~ICard~
+    }
+
+    class IPlayer {
+		+ getName(): string
+		+ getChips(): int
+		+ setChips(int) void
+		+ getPosition(): Position
+		+ isFolded(): bool
+		+ setFolded(bool) void
+		+ getCurrentBetInRound(): int
+		+ setCurrentBetInRound(int) void
+		+ getHand(): List~ICard~    
+    }
+    class Player {
+	    + string name 
+	    + int chips
+	    + Position position
+	    + boolean isFolded
+	    + int currentBetInRound
+	    + List~ICard~ hand 
+	    + Player(name: string, chips: int)
+		+ getName(): string
+		+ getChips(): int
+		+ setChips(int) void
+		+ getPosition(): Position
+		+ isFolded(): bool
+		+ setFolded(bool) void
+		+ getCurrentBetInRound(): int
+		+ setCurrentBetInRound(int) void
+		+ getHand(): List~ICard~
+    }
+    class Position {
+	    Dealer
+	    Small_Blind
+	    Big_Blind
+	    Early_Position
+	    Middle_Position
+	    Late_Position
+    }
+    class ActionType {
+	    Fold
+	    Call
+	    Raise
+	    Check
+	    Bet
+        AllIn
+    }
+    class IDeck {
+	    + getCards() : List~ICard~
+        + setCards(List~ICard~) : void
+        + isEmpty() : bool
+    }
+    class Deck {
+	    + List~ICard~ ICards 
+		+ getCards() : List~ICard~
+        + setCards(List~ICard~) : void
+        + isEmpty() : bool
+    }
+
+	class ICard{
+		+ getSuit() Suit
+        + getValue() CardValue
+        + ToString() string
+	}
+
+    class Card {
+	    + suit Suit get;
+	    + value CardValue get;
+	    + ToString() : string
+	    + Card(suit : Suit, value: CardValue)
+    }
+    class Suit {
+	    Hearts
+	    Spades
+	    Diamonds
+	    Clubs
+    }
+    class CardValue {
+	    Two
+	    Three
+	    Four
+	    Five
+	    Six
+	    Seven
+	    Eight
+	    Nine
+	    Ten
+	    Jack
+	    Queen
+	    King
+	    Ace
+    }
+    class HandRank {
+	    Royal_Flush
+	    Straight_Flush
+	    Four_of_a_Kind
+	    Full_House
+	    Flush
+	    Straight
+	    Three_of_a_Kind
+	    Two_Pairs
+	    One_Pair
+	    No_Pair
+    }
+    class IPot {
+	    + setPot(amount : int) : void
+	    + getAmount() : int
+    }
+    class Pot {
+	    + int amount 
+	    + Pot(amount : int)
+	    + setPot(amount : int) : void
+	    + getAmount() : int
+    }
+    class BettingRoundType {
+	    PreFlop
+	    Flop
+	    Turn
+	    River
+	    Showdown
+    }
+    class GameController {
+	    - List~IPlayer~ _Players 
+	    - IDeck _deck 
+	    - ITable _table
+	    - IPot _pot 
+	    - IPlayer _dealerPlayer
+	    - int _smallBlindAmount
+	    - int _bigBlindAmount 
+        - int _minRaise 
+        - int _currentBet
+		- int _currentRoundNumber 
+	    + Action ~List~ICard~~ ? OnCommunityCardsRevealed
+	    + Action <.IPlayer, ActionType, int> ? OnPlayerActionTaken
+	    + GameController(smallBlindAmt : int, bigBlindAmt : int, minRaise : int, deck : IDeck, table : ITable, pot : IPot)
+	    + startGame() : void
+        + getSeatedPlayers(): List<IPlayer>
+		+ shuffleCard() : void
+        + startNewHand(): void
+        + seatPlayer(player: IPlayer): void
+        + removePlayer(player: IPlayer): void
+	    + rotateDealerButton() : void
+	    + assignBlindsAndPositions() : void
+	    + postBlinds() : void
+		+ currentRoundActions: List<(player: Player, action: ActionType, amount: int)>
+	    + takeAllCards(player: IPlayer) : List~ICard~
+	   	+ addPlayerChips(player: IPlayer, amount : int) : void
+        + dealHoleCards() : void
+	    + dealCommunityCards(round: BettingRoundType) : void
+	    + dealCard() : Card
+        + burnCard() : void
+		+ showPlayerHand(player: IPlayer) : List~ICard~
+		+ processFold(player: IPlayer) void
+	    + startBettingRound(round: BettingRoundType) void
+		+ requestPlayerAction(currentBet: int, minRaise: int, potSize: int, communityCards: List~ICard~) : PlayerAction
+		+ handlePlayerAction(player: Player, action: ActionType, amount: int) void
+	    + evaluateHand(holeCards: List~ICard~, communityCards : List~ICard~) : HandRank
+	    + findWinners(players: List~IPlayer~, communityCards: List~ICard~) : List~Player~
+        + awardPot(winners: List~IPlayer~) : void
+        + resetGameState() : void
+	    + getAllCards(communityCards: List~ICard~) : List~ICard~
+	    + startNewRound() : void
+	    + manageRoundActions(action : PlayerAction) : void
+        + clearCommunityCards() : void
+    }
+	<<Interface>> ITable
+	<<Interface>> IPlayer
+	<<enumeration>> Position
+	<<enumeration>> ActionType
+	<<Interface>> IDeck
+	<<enumeration>> Suit
+	<<enumeration>> CardValue
+	<<enumeration>> HandRank
+	<<Interface>> IPot
+	<<enumeration>> BettingRoundType
+    GameController "1" *-- "1" IDeck
+    GameController "1" *-- "1" ITable
+    GameController "1" *-- "1" IPot
+	GameController "1" o-- "2..8" IPlayer
+    GameController "1" -->  "1" BettingRoundType : uses
+    GameController "1" -->  "1" HandRank : uses
+    GameController "1" -->  "1" ActionType : uses
+	IDeck   "1" <|.. "1" Deck : Realization
+    IPlayer "1" <|.. "1" Player : Realization
+	ITable  "1" <|.. "1" Table : Realization
+	IPot    "1" <|.. "1" Pot : Realization
+	ICard    "1" <|.. "1" Card : Realization
+    Player "1" --> "1" Position : has
+    Player "1" *-- "2" ICard : holds
+    Table "1" --> "0..5" ICard 
+    Deck "1" *-- "52" ICard : Composition
+    Card "1" -->  "1" CardValue : has
+    Card "1" -->  "1" Suit : has

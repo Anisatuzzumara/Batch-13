@@ -1,63 +1,52 @@
+using System;
+using Poker.Interfaces;
+using Poker.Classes;
+using Poker.Enumerations;
+
+
 namespace Poker.Games
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Poker.Interfaces;
-    using Poker.Classes;
-    using Poker.Enumerations;
 
     public class GameController
     {
-        private List<IPlayer> _players = new();
-        private IDeck _deck;
-        private ITable _table;
-        private IPot _pot;
+        private readonly List<IPlayer> _players = new();
+        private readonly IDeck _deck;
+        private readonly ITable _table;
+        private readonly IPot _pot;
         private IPlayer? _dealerPlayer;
-        private int _smallBlindAmount;
-        private int _bigBlindAmount;
-        private int _minRaise;
-        private int _currentBet;
-        private int _currentRoundNumber;
+        private readonly int _smallBlindAmount;
+        private readonly int _bigBlindAmount;
+        private readonly int _minRaiseAmount;
+
+        public int MinRaise => _minRaiseAmount;
+        public int CurrentMaxBet { get; private set; }
 
         public Action<List<ICard>>? OnCommunityCardsRevealed;
         public Action<IPlayer, ActionType, int>? OnPlayerActionTaken;
-        public List<(Player player, ActionType action, int amount)> CurrentRoundActions { get; private set; } = new();
-        public int BigBlind { get; internal set; }
-        public int MinRaise => _minRaise; 
-
-        public int CurrentMaxBet { get;  set; }
-
-        public GameController(int smallBlindAmt, int bigBlindAmt, int minRaise, IDeck deck, ITable table, IPot pot)
+        public GameController(int smallBlindAmt, int bigBlindAmt, int minRaiseAmt, IDeck deck, ITable table, IPot pot)
         {
-            _smallBlindAmount = 100;
-            _bigBlindAmount = 1000;
-            _minRaise = 100;
-            _deck = deck;
-            _table = table;
-            _pot = pot;
-        }
+            // Dependensi tidak null
+            _deck = deck ?? throw new ArgumentNullException(nameof(deck));
+            _table = table ?? throw new ArgumentNullException(nameof(table));
+            _pot = pot ?? throw new ArgumentNullException(nameof(pot));
 
-
-        public void StartGame()
-        {
-            ShuffleCard();
-            StartNewHand();
-        }
-
-        public List<IPlayer> GetSeatedPlayers() => _players;
-
-        public void ShuffleCard()
-        {
-            var cards = _deck.GetCards();
-            var random = new Random();
-            cards = cards.OrderBy(_ => random.Next()).ToList();
-            _deck.SetCards(cards);
+            _smallBlindAmount = smallBlindAmt;
+            _bigBlindAmount = bigBlindAmt;
+            _minRaiseAmount = minRaiseAmt;
         }
 
         public void StartNewHand()
         {
-            _table.GetCommunityCards().Clear();
+            // Hapus pemain yang habis chips
+            _players.RemoveAll(p => p.GetChips() <= 0);
+            if (_players.Count < 2) return;
+
+            // Reset semua status untuk hand baru
+            _deck.ResetAndShuffle(); 
+            _table.ClearCommunityCards();
+            _pot.SetPot(0);
+            CurrentMaxBet = 0;
+
             foreach (var player in _players)
             {
                 player.GetHand().Clear();
@@ -67,325 +56,254 @@ namespace Poker.Games
             RotateDealerButton();
             AssignBlindsAndPositions();
             DealHoleCards();
+            PostBlinds();
         }
 
-
+        public List<IPlayer> GetSeatedPlayers() => _players.ToList();
         public void SeatPlayer(IPlayer player) => _players.Add(player);
         public void RemovePlayer(IPlayer player) => _players.Remove(player);
 
-        public void RotateDealerButton()
+        private void RotateDealerButton()
         {
-            if (_players.Count == 0) return;
-            var currentIndex = _dealerPlayer != null ? _players.IndexOf(_dealerPlayer) : -1;
-            _dealerPlayer = _players[(currentIndex + 1) % _players.Count];
+            var activePlayers = _players.Where(p => p.GetChips() > 0).ToList();
+            if (!activePlayers.Any()) return;
+            int currentIndex = _dealerPlayer != null ? activePlayers.IndexOf(_dealerPlayer) : -1;
+            _dealerPlayer = activePlayers[(currentIndex + 1) % activePlayers.Count];
         }
 
-        public void AssignBlindsAndPositions()
+        private void AssignBlindsAndPositions()
         {
-            if (_dealerPlayer == null)
-            return;
-            var dealerIndex = _players.IndexOf(_dealerPlayer);
-            int count = _players.Count;
-            for (int i = 0; i < count; i++)
+            if (_dealerPlayer == null) RotateDealerButton();
+            if (_dealerPlayer == null) return;
+
+            var activePlayers = _players.Where(p => p.GetChips() > 0).ToList();
+            if (!activePlayers.Any()) return;
+
+            int dealerIndex = activePlayers.IndexOf(_dealerPlayer);
+            if (dealerIndex == -1) return;
+
+            activePlayers.ForEach(p => p.SetPosition(Position.None));
+
+            int count = activePlayers.Count;
+            if (count == 2) 
             {
-            var position = (i - dealerIndex + count) % count;
-            if (position == 0)
-                _players[i].SetPosition(Position.Dealer);
-            else if (position == 1)
-                _players[i].SetPosition(Position.Small_Blind);
-            else if (position == 2)
-                _players[i].SetPosition(Position.Big_Blind);
-            else if (position == 3)
-                _players[i].SetPosition(Position.Early_Position);
-            else if (position == count - 1)
-                _players[i].SetPosition(Position.Middle_Position);
+                activePlayers[dealerIndex].SetPosition(Position.Dealer); // Dealer juga Small Blind
+                activePlayers[(dealerIndex + 1) % count].SetPosition(Position.Big_Blind);
+            }
             else
-                _players[i].SetPosition(Position.Late_Position);
-            }
-        }
-
-
-        public void PostBlinds()
-        {
-            foreach (var player in _players)
             {
-                var pos = player.GetPosition();
-                if (pos == Position.Small_Blind)
-                    player.SetChips(player.GetChips() - _smallBlindAmount);
-                if (pos == Position.Dealer)
-                    player.SetChips(player.GetChips() - _smallBlindAmount); // or use a specific dealer blind amount if needed
-                else if (pos == Position.Big_Blind)
-                    player.SetChips(player.GetChips() - _bigBlindAmount);
+                activePlayers[dealerIndex].SetPosition(Position.Dealer);
+                activePlayers[(dealerIndex + 1) % count].SetPosition(Position.Small_Blind);
+                activePlayers[(dealerIndex + 2) % count].SetPosition(Position.Big_Blind);
+
+                if (count > 3)
+                {
+                    activePlayers[(dealerIndex + 3) % count].SetPosition(Position.Early_Position);
+                }
+                if (count > 4)
+                {
+                    activePlayers[(dealerIndex + 4) % count].SetPosition(Position.Middle_Position);
+                }
+                if (count > 5)
+                {
+                    activePlayers[(dealerIndex + 5) % count].SetPosition(Position.Late_Position);
+                }
             }
+
         }
 
-        public List<ICard> TakeAllCards(IPlayer player)
+        private void PostBlinds()
         {
-            var cards = player.GetHand();
-            player.GetHand().Clear();
-            return cards;
+            IPlayer? sbPlayer = _players.FirstOrDefault(p => p.GetPosition() == Position.Small_Blind);
+            IPlayer? bbPlayer = _players.FirstOrDefault(p => p.GetPosition() == Position.Big_Blind);
+
+            if (_players.Count(p => p.GetChips() > 0) == 2)
+            {
+                sbPlayer = _dealerPlayer;
+                bbPlayer = _players.First(p => p != _dealerPlayer);
+            }
+
+            if (sbPlayer != null)
+            {
+                int amount = Math.Min(_smallBlindAmount, sbPlayer.GetChips());
+                sbPlayer.SetCurrentBetInRound(amount);
+                sbPlayer.SetChips(sbPlayer.GetChips() - amount);
+                _pot.AddToPot(amount);
+            }
+            if (bbPlayer != null)
+            {
+                int amount = Math.Min(_bigBlindAmount, bbPlayer.GetChips());
+                bbPlayer.SetCurrentBetInRound(amount);
+                bbPlayer.SetChips(bbPlayer.GetChips() - amount);
+                _pot.AddToPot(amount);
+            }
+            CurrentMaxBet = _bigBlindAmount;
         }
-
-
-        public void AddPlayerChips(IPlayer player, int amount) => player.SetChips(player.GetChips() + amount);
-
-        public void ProcessFold(IPlayer player) => player.SetFolded(true);
-
-        public void ClearCommunityCards() => _table.GetCommunityCards().Clear();
-
-        public List<ICard> ShowPlayerHand(IPlayer player) => player.GetHand();
 
         public void StartBettingRound(BettingRoundType round)
         {
-            _currentRoundNumber++;
-            _currentBet = 0;
-            CurrentRoundActions.Clear();
-            // Tambahkan logika betting round di sini jika perlu
-        }
-
-        public PlayerAction RequestPlayerAction(int currentBet, int minRaise, int potSize, List<ICard> communityCards)
-        {
-            // Placeholder: implementasi sesuai kebutuhan UI/CLI
-            return new PlayerAction();
+            if (round != BettingRoundType.PreFlop)
+            {
+                foreach (var player in _players.Where(p => !p.IsFolded()))
+                {
+                    player.SetCurrentBetInRound(0);
+                }
+                CurrentMaxBet = 0;
+            }
         }
 
         public void HandlePlayerAction(IPlayer player, ActionType action, int amount)
         {
-            if (action == ActionType.Fold)
-                ProcessFold(player);
-            else if (action == ActionType.Call || action == ActionType.Raise || action == ActionType.Bet || action == ActionType.AllIn || action == ActionType.Check)
-            {
-                // Validation is handled below.
-            }
-            else
-            {
-                throw new InvalidOperationException($"Unknown action type: {action}");
-            }
-            {
-                if (player.IsFolded())
-                    throw new InvalidOperationException("Cannot take action on a folded player.");
+            if (player.IsFolded()) return;
 
-                if (amount < 0)
-                    throw new ArgumentOutOfRangeException(nameof(amount), "Amount must be non-negative.");
-
-                if (amount > player.GetChips())
-                    throw new InvalidOperationException("Player does not have enough chips to perform this action.");
-
-                if (action == ActionType.Call && amount < _currentBet)
-                    throw new InvalidOperationException($"Call amount must be at least the current bet: {_currentBet}");
-            }
+            switch (action)
             {
-                // Enforce minimum raise
-                if (action == ActionType.Raise && amount < _minRaise)
-                    throw new InvalidOperationException($"Raise amount must be at least the minimum raise: {_minRaise}");
+                case ActionType.Fold:
+                    player.SetFolded(true);
+                    break;
+                case ActionType.Check:
+                    break;
+                case ActionType.Call:
+                    int amountToCall = Math.Min(amount, player.GetChips());
+                    player.SetChips(player.GetChips() - amountToCall);
+                    player.SetCurrentBetInRound(player.GetCurrentBetInRound() + amountToCall);
+                    _pot.AddToPot(amountToCall);
+                    break;
+                case ActionType.Raise:
+                case ActionType.Bet:
+                    int amountToRaise = Math.Min(amount, player.GetChips());
+                    player.SetChips(player.GetChips() - amountToRaise);
+                    player.SetCurrentBetInRound(player.GetCurrentBetInRound() + amountToRaise);
+                    _pot.AddToPot(amountToRaise);
+                    CurrentMaxBet = player.GetCurrentBetInRound();
+                    break;
+                case ActionType.AllIn:
+                    int allInAmount = player.GetChips();
+                    player.SetCurrentBetInRound(player.GetCurrentBetInRound() + allInAmount);
+                    player.SetChips(0);
+                    _pot.AddToPot(allInAmount);
+                    if (player.GetCurrentBetInRound() > CurrentMaxBet)
+                    {
+                        CurrentMaxBet = player.GetCurrentBetInRound();
+                    }
+                    break;
 
-                player.SetChips(player.GetChips() - amount);
-                player.SetCurrentBetInRound(player.GetCurrentBetInRound() + amount);
-                _pot.SetPot(_pot.GetAmount() + amount);
-                if (amount > _currentBet)
-                    _currentBet = amount;
             }
-            CurrentRoundActions.Add(((Player)player, action, amount));
             OnPlayerActionTaken?.Invoke(player, action, amount);
         }
 
-        public void DealHoleCards()
+        private void DealHoleCards()
         {
-            for (int i = 0; i < 2; i++)
+            if (_dealerPlayer == null) return;
+            int dealerIndex = _players.IndexOf(_dealerPlayer);
+            for (int cardNum = 0; cardNum < 2; cardNum++)
             {
-                foreach (var player in _players)
+                for (int i = 1; i <= _players.Count; i++)
                 {
-                    var card = DealCard();
-                    player.GetHand().Add(card);
+                    var player = _players[(dealerIndex + i) % _players.Count];
+                    if (player.GetChips() > 0)
+                    {
+                        player.AddCardToHand(_deck.DealCard());
+                    }
                 }
             }
         }
 
-
         public void DealCommunityCards(BettingRoundType round)
         {
+            _deck.BurnCard();
             if (round == BettingRoundType.Flop)
             {
-                BurnCard();
-                _table.SetCommunityCard(DealCard());
-                _table.SetCommunityCard(DealCard());
-                _table.SetCommunityCard(DealCard());
+                for (int i = 0; i < 3; i++) _table.AddCommunityCard(_deck.DealCard());
             }
             else if (round == BettingRoundType.Turn || round == BettingRoundType.River)
             {
-                BurnCard();
-                _table.SetCommunityCard(DealCard());
+                _table.AddCommunityCard(_deck.DealCard());
             }
-
             OnCommunityCardsRevealed?.Invoke(_table.GetCommunityCards());
         }
 
 
-        public ICard DealCard()
+        public (HandRank Rank, List<CardValue> HighCards) EvaluateHand(List<ICard> holeCards, List<ICard> communityCards)
         {
-            var card = _deck.GetCards().First();
-            _deck.GetCards().RemoveAt(0);
-            return card;
-        }
+            var allCards = new List<ICard>(holeCards);
+            allCards.AddRange(communityCards);
+            if (allCards.Count < 5) return (HandRank.No_Pair, new List<CardValue>());
 
-        public void BurnCard() => _deck.GetCards().RemoveAt(0);
+            var all5CardHands = GetKCombs(allCards, 5);
+            (HandRank Rank, List<CardValue> HighCards) bestHand = (HandRank.No_Pair, new List<CardValue>());
 
-        public HandRank EvaluateHand(List<ICard> holeCards, List<ICard> communityCards)
-        {
-            var allCards = holeCards.Concat(communityCards).ToList();
-
-            // Hitung jumlah rank dan suit
-            var rankGroups = allCards.GroupBy(c => c.Rank).OrderByDescending(g => g.Count()).ToList();
-            var suitGroups = allCards.GroupBy(c => c.Suit).ToList();
-
-            bool isFlush = suitGroups.Any(g => g.Count() >= 5);
-            var orderedRanks = allCards.Select(c => (int)c.Rank).Distinct().OrderByDescending(r => r).ToList();
-
-            // Cek Straight
-            bool isStraight = false;
-            int straightHigh = 0;
-            for (int i = 0; i <= orderedRanks.Count - 5; i++)
+            foreach (var hand in all5CardHands)
             {
-            if (orderedRanks[i] - orderedRanks[i + 4] == 4)
-            {
-                isStraight = true;
-                straightHigh = orderedRanks[i];
-                break;
-            }
-            }
-            // Cek straight low-Ace (A,2,3,4,5)
-            if (!isStraight && orderedRanks.Contains(14) && orderedRanks.Contains(2) && orderedRanks.Contains(3) && orderedRanks.Contains(4) && orderedRanks.Contains(5))
-            {
-            isStraight = true;
-            straightHigh = 5;
-            }
-
-            // Cek Royal Flush & Straight Flush
-            if (isFlush)
-            {
-            foreach (var suitGroup in suitGroups.Where(g => g.Count() >= 5))
-            {
-                var flushRanks = suitGroup.Select(c => (int)c.Rank).Distinct().OrderByDescending(r => r).ToList();
-                // Cek straight flush
-                for (int i = 0; i <= flushRanks.Count - 5; i++)
+                var currentEval = EvaluateSingle5CardHand(hand.ToList());
+                if (currentEval.Rank > bestHand.Rank)
                 {
-                if (flushRanks[i] - flushRanks[i + 4] == 4)
+                    bestHand = currentEval;
+                }
+                else if (currentEval.Rank == bestHand.Rank)
                 {
-                    if (flushRanks[i] == 14)
-                    return HandRank.Royal_Flush;
-                    return HandRank.Straight_Flush;
+                    for (int i = 0; i < currentEval.HighCards.Count; i++)
+                    {
+                        if (bestHand.HighCards == null || i >= bestHand.HighCards.Count || currentEval.HighCards[i] > bestHand.HighCards[i])
+                        {
+                            bestHand = currentEval;
+                            break;
+                        }
+                        if (currentEval.HighCards[i] < bestHand.HighCards[i]) break;
+                    }
                 }
-                }
-                // Cek straight flush low-Ace
-                if (flushRanks.Contains(14) && flushRanks.Contains(2) && flushRanks.Contains(3) && flushRanks.Contains(4) && flushRanks.Contains(5))
-                return HandRank.Straight_Flush;
             }
-            }
-
-            // Four of a Kind
-            if (rankGroups.Any(g => g.Count() == 4))
-            return HandRank.Four_of_a_Kind;
-
-            // Full House
-            if (rankGroups.Any(g => g.Count() == 3) && rankGroups.Any(g => g.Count() == 2))
-            return HandRank.Full_House;
-
-            // Flush
-            if (isFlush)
-            return HandRank.Flush;
-
-            // Straight
-            if (isStraight)
-            return HandRank.Straight;
-
-            // Three of a Kind
-            if (rankGroups.Any(g => g.Count() == 3))
-            return HandRank.Three_of_a_Kind;
-
-            // Two Pair
-            if (rankGroups.Count(g => g.Count() == 2) >= 2)
-            return HandRank.Two_Pairs;
-
-            // One Pair
-            if (rankGroups.Any(g => g.Count() == 2))
-            return HandRank.One_Pair;
-
-            // High Card
-            return HandRank.No_Pair;
+            return bestHand;
         }
 
-        public List<Player> FindWinners(List<IPlayer> players, List<ICard> communityCards)
+        private (HandRank Rank, List<CardValue> HighCards) EvaluateSingle5CardHand(List<ICard> hand)
         {
-            var remainingPlayers = players.Where(p => !p.IsFolded()).Cast<Player>();
-            var ranked = remainingPlayers
-                .Select(p => new { Player = p, Rank = EvaluateHand(p.GetHand(), communityCards) })
-                .OrderByDescending(x => x.Rank)
-                .ToList();
+            var sortedRanks = hand.Select(c => c.Value).OrderByDescending(r => r).ToList();
+            var rankGroups = sortedRanks.GroupBy(r => r).OrderByDescending(g => g.Count()).ThenByDescending(g => g.Key).ToList();
+            bool isFlush = hand.GroupBy(c => c.Suit).Count() == 1;
+            var uniqueRanks = sortedRanks.Distinct().ToList();
+            bool isWheel = uniqueRanks.SequenceEqual(new List<CardValue> { CardValue.Ace, CardValue.Five, CardValue.Four, CardValue.Three, CardValue.Two });
+            bool isStraight = isWheel || (uniqueRanks.Count == 5 && (int)uniqueRanks.First() - (int)uniqueRanks.Last() == 4);
 
-            var bestRank = ranked.First().Rank;
-            return ranked.Where(x => x.Rank == bestRank).Select(x => x.Player).ToList();
+            var highCards = rankGroups.Select(g => g.Key).ToList();
+
+            if (isStraight && isFlush) return (uniqueRanks.First() == CardValue.Ace ? HandRank.Royal_Flush : HandRank.Straight_Flush, isWheel ? new List<CardValue> { CardValue.Five, CardValue.Four, CardValue.Three, CardValue.Two, CardValue.Ace } : sortedRanks);
+            if (rankGroups[0].Count() == 4) return (HandRank.Four_of_a_Kind, new List<CardValue> { rankGroups[0].Key, highCards.First(r => r != rankGroups[0].Key) });
+            if (rankGroups[0].Count() == 3 && rankGroups[1].Count() == 2) return (HandRank.Full_House, new List<CardValue> { rankGroups[0].Key, rankGroups[1].Key });
+            if (isFlush) return (HandRank.Flush, sortedRanks);
+            if (isStraight) return (HandRank.Straight, isWheel ? new List<CardValue> { CardValue.Five, CardValue.Four, CardValue.Three, CardValue.Two, CardValue.Ace } : sortedRanks);
+            if (rankGroups[0].Count() == 3) return (HandRank.Three_of_a_Kind, new List<CardValue> { rankGroups[0].Key }.Concat(highCards.Where(r => r != rankGroups[0].Key).Take(2)).ToList());
+            if (rankGroups[0].Count() == 2 && rankGroups[1].Count() == 2) return (HandRank.Two_Pairs, new List<CardValue> { rankGroups[0].Key, rankGroups[1].Key, highCards.First(r => r != rankGroups[0].Key && r != rankGroups[1].Key) });
+            if (rankGroups[0].Count() == 2) return (HandRank.One_Pair, new List<CardValue> { rankGroups[0].Key }.Concat(highCards.Where(r => r != rankGroups[0].Key).Take(3)).ToList());
+            return (HandRank.No_Pair, sortedRanks);
         }
 
+        private static IEnumerable<IEnumerable<T>> GetKCombs<T>(IEnumerable<T> list, int length) where T : ICard
+        {
+            if (length == 1) return list.Select(t => new T[] { t });
+            return GetKCombs(list.Skip(1), length - 1).SelectMany(t => list.Take(1), (t1, t2) => t1.Concat(new T[] { t2 }));
+        }
 
         public void AwardPot(List<IPlayer> winners)
         {
-            int splitAmount = _pot.GetAmount() / winners.Count;
+            if (!winners.Any() || _pot.GetAmount() == 0) return;
+            int totalPot = _pot.GetAmount();
+            int amountPerWinner = totalPot / winners.Count;
+            int remainder = totalPot % winners.Count;
+
             foreach (var winner in winners)
-                winner.SetChips(winner.GetChips() + splitAmount);
-            _pot.SetPot(0);
-        }
-
-        public void ResetGameState()
-        {
-            _currentRoundNumber = 0;
-            _currentBet = 0;
-            CurrentRoundActions.Clear();
-            ClearCommunityCards();
-        }
-
-
-        public List<ICard> GetAllCards(List<ICard> communityCards)
-        {
-            var all = new List<ICard>();
-            foreach (var p in _players)
-            all.AddRange(p.GetHand());
-            all.AddRange(communityCards);
-            return all;
-        }
-
-        // (Assume this is near the end of your GameController class)
-        // Returns a numeric value representing the strength of a hand for comparison
-        public int GetHandValue(List<ICard> playerHand, List<ICard> communityCards)
-        {
-            // Example: Combine all cards and assign a simple value based on sorted ranks
-            var allCards = playerHand.Concat(communityCards).OrderByDescending(c => (int)c.Rank).ToList();
-            int value = 0;
-            int multiplier = 1;
-            foreach (var card in allCards)
             {
-                value += (int)card.Rank * multiplier;
-                multiplier *= 15; // 13 ranks + buffer
+                // Menambahkan bagian pot ke chip pemenang
+                winner.SetChips(winner.GetChips() + amountPerWinner); 
             }
-        return value;
-        }
     
+            // Memberikan sisa jika pembagian tidak rata
+            if(remainder > 0 && winners.Any()) 
+            {
+                winners.First().SetChips(winners.First().GetChips() + remainder);
+            }
 
-        public void StartNewRound()
-        {
-            StartBettingRound((BettingRoundType)_currentRoundNumber);
-            DealCommunityCards((BettingRoundType)_currentRoundNumber);
+            _pot.SetPot(0); // Mengosongkan pot setelah dibagikan
         }
-
-        public void ManageRoundActions(PlayerAction action)
-        {
-            HandlePlayerAction(action.Player, action.Action, action.Amount);
-        }
-    }
-
-    public class PlayerAction
-    {
-        public Player? Player { get; set; }
-        public ActionType Action { get; set; }
-        public int Amount { get; set; }
     }
 }
