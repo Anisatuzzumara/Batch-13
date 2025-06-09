@@ -267,7 +267,8 @@ class Program
                 Position.Big_Blind => "(BB)",
                 Position.Early_Position => "(EP)",
                 Position.Middle_Position => "(MP)",
-                Position.Late_Position => "(LP)"
+                Position.Late_Position => "(LP)",
+                _ => ""
             };
             // ---------------------------------
 
