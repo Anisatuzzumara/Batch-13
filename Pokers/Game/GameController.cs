@@ -71,7 +71,7 @@ namespace Poker.Games
             _dealerPlayer = activePlayers[(currentIndex + 1) % activePlayers.Count];
         }
 
-        private void AssignBlindsAndPositions()
+        public void AssignBlindsAndPositions()
         {
             if (_dealerPlayer == null) RotateDealerButton();
             if (_dealerPlayer == null) return;
@@ -112,7 +112,7 @@ namespace Poker.Games
 
         }
 
-        private void PostBlinds()
+        public void PostBlinds()
         {
             IPlayer? sbPlayer = _players.FirstOrDefault(p => p.GetPosition() == Position.Small_Blind);
             IPlayer? bbPlayer = _players.FirstOrDefault(p => p.GetPosition() == Position.Big_Blind);
@@ -192,7 +192,7 @@ namespace Poker.Games
             OnPlayerActionTaken?.Invoke(player, action, amount);
         }
 
-        private void DealHoleCards()
+        public void DealHoleCards()
         {
             if (_dealerPlayer == null) return;
             int dealerIndex = _players.IndexOf(_dealerPlayer);
@@ -256,7 +256,7 @@ namespace Poker.Games
             return bestHand;
         }
 
-        private (HandRank Rank, List<CardValue> HighCards) EvaluateSingle5CardHand(List<ICard> hand)
+        public (HandRank Rank, List<CardValue> HighCards) EvaluateSingle5CardHand(List<ICard> hand)
         {
             var sortedRanks = hand.Select(c => c.Value).OrderByDescending(r => r).ToList();
             var rankGroups = sortedRanks.GroupBy(r => r).OrderByDescending(g => g.Count()).ThenByDescending(g => g.Key).ToList();

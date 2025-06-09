@@ -270,7 +270,6 @@ class Program
                 Position.Late_Position => "(LP)",
                 _ => ""
             };
-            // ---------------------------------
 
             Console.WriteLine($"{p.GetName(), -10}{pos,-5}| Chips: {p.GetChips(),-5} | Bet: {p.GetCurrentBetInRound(),-4}{status}");
         }
