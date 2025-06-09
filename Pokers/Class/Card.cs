@@ -15,6 +15,6 @@ namespace Poker.Classes
 
         public Suit GetSuit() => Suit;
         public CardValue GetValue() => Value;
-        public override string ToString() => $"{Value} of {Suit}";
+        public string ToString() => $"{Value} of {Suit}";
     }
 }
