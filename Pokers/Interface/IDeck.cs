@@ -8,8 +8,5 @@ namespace Poker.Interfaces
         List<ICard> GetCards();
         void SetCards(List<ICard> cards);
         bool IsEmpty();
-        void ResetAndShuffle();
-        ICard DealCard();
-        void BurnCard();
     }
 }

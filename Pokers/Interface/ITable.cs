@@ -8,7 +8,6 @@ namespace Poker.Interfaces
         List<ICard> GetCommunityCards();
         
         void AddCommunityCard(ICard card);
-        void ClearCommunityCards();
 
     }
 }

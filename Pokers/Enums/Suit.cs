@@ -2,6 +2,9 @@ namespace Poker.Enumerations
 {
     public enum Suit
     {
-        Hearts, Spades, Diamonds, Clubs
+        Hearts,
+        Spades,
+        Diamonds,
+        Clubs
     }
 }

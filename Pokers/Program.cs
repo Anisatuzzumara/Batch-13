@@ -1,148 +1,142 @@
-﻿﻿using Poker.Classes;
+﻿using Poker.Model;
 using Poker.Enumerations;
 using Poker.Games;
 using Poker.Interfaces;
-using System.Text;
+
+
 
 class Program
 {
+
     static ITable table = new Table();
     static IPot pot;
     static GameController controller = null!;
+    static IDisplay display = new ConsoleDisplay(); 
+    static IHandEvaluator handEvaluator = new HandEvaluator();
 
     static void Main(string[] args)
     {
-        Console.OutputEncoding = Encoding.UTF8;
-        Console.Title = "Texas Hold'em Poker";
-        Console.WriteLine("=== Selamat Datang di Permainan Poker Texas Hold'em ===");
-
+        display.ShowWelcomeMessage();
         pot = new Pot(0);
+
         int playerCount = GetPlayerCount(2, 6);
         IDeck deck = new Deck();
-        controller = new GameController(10, 20, 20, deck, table, pot);
-        controller.OnPlayerActionTaken += (player, action, amount) => { Console.WriteLine($"-> Aksi: {player.GetName()} melakukan {action} sebesar {amount}"); };
+        
+        controller = new GameController(10, 20, 20, deck, table, pot, handEvaluator);
 
+        // Registrasi pemain
         for (int i = 1; i <= playerCount; i++)
         {
             Console.Write($"Masukkan nama Pemain {i}: ");
             string name = Console.ReadLine() ?? $"Pemain{i}";
             if (string.IsNullOrWhiteSpace(name)) name = $"Pemain{i}";
-            int chips = GetPlayerChips(i, 1000);
-            controller.SeatPlayer(new Player(name, chips));
+            {
+                int chips = GetPlayerChips(i, 1000);
+                controller.SeatPlayer(new Player(name, chips));
+            }
         }
 
-        // Versi OTOMATIS
-        //for (int i = 1; i <= playerCount; i++)
-        //{
-        //    Console.Write($"Masukkan nama Pemain {i}: ");
-        //    string name = Console.ReadLine() ?? $"Pemain{i}";
-        //    if (string.IsNullOrWhiteSpace(name)) name = $"Pemain{i}";
-        //    int chips = 1000; // <-- UBAH DI SINI. Semua pemain akan mulai dengan 1000 chip.
-        //    controller.SeatPlayer(new Player(name, chips));
-        //}
-
+        // Loop permainan utama
         bool continuePlaying = true;
         while (continuePlaying)
         {
             if (controller.GetSeatedPlayers().Count(p => p.GetChips() > 0) < 2)
             {
-                Console.WriteLine("\nTidak cukup pemain untuk melanjutkan. Permainan selesai.");
+                display.ShowMessage("\nTidak cukup pemain untuk melanjutkan. Permainan selesai.", ConsoleColor.Red);
                 break;
             }
 
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\n--- Memulai Hand Baru ---");
-            Console.ResetColor();
-            
+            display.ShowNewHandStarting();
             controller.StartNewHand();
             
-            PrintPlayers();
             RunGameRound(BettingRoundType.PreFlop, "Pre-Flop");
             RunGameRound(BettingRoundType.Flop, "Flop");
             RunGameRound(BettingRoundType.Turn, "Turn");
             RunGameRound(BettingRoundType.River, "River");
 
             PerformShowdown();
-
-            Console.Write("\nMainkan hand lain? (Y/N): ");
-            continuePlaying = (Console.ReadLine()?.Trim().ToUpper() == "Y");
+            continuePlaying = display.AskToPlayAnotherHand();
         }
         Console.WriteLine("\nTerima kasih telah bermain!");
     }
 
     static void RunGameRound(BettingRoundType roundType, string roundName)
     {
-        if (controller.GetSeatedPlayers().Count(p => !p.IsFolded()) <= 1) return;
-
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"\n--- Babak {roundName} ---");
-        Console.ResetColor();
-
-        if (roundType != BettingRoundType.PreFlop)
+        if (controller.GetSeatedPlayers().Count(p => !p.IsFolded()) <= 1)
+            return;
         {
-            controller.DealCommunityCards(roundType);
+            display.ShowRoundBanner(roundName);
+            display.DisplayPlayers(controller.GetSeatedPlayers(), pot);
         }
+        if (roundType != BettingRoundType.PreFlop)
+            {
+                controller.DealCommunityCards(roundType);
+            }
         
-        PrintCommunityCards();
+        display.DisplayCommunityCards(table);
         HandleBettingRound(roundType);
     }
-    
-    static void HandleBettingRound(BettingRoundType roundType)
+        static void HandleBettingRound(BettingRoundType roundType)
     {
         controller.StartBettingRound(roundType);
         
         var playersInOrder = GetPlayersInBettingOrder(roundType);
-        if (!playersInOrder.Any()) return;
-
+        if (!playersInOrder.Any())
+            return;
+        
         int playerIndex = 0;
-        int actionCount = 0;
+        int playersActedInTurn = 0;
         
         while(true)
         {
             var activePlayers = controller.GetSeatedPlayers().Where(p => !p.IsFolded()).ToList();
-            if (activePlayers.Count <= 1) break;
+            if (activePlayers.Count <= 1)
+                break;
 
             IPlayer currentPlayer = playersInOrder[playerIndex % playersInOrder.Count];
 
+            bool didRaiseOrBet = false;
             if (!currentPlayer.IsFolded() && currentPlayer.GetChips() > 0)
             {
-                RequestAndHandlePlayerAction(currentPlayer);
-                actionCount++;
+                didRaiseOrBet = RequestAndHandlePlayerAction(currentPlayer);
+                playersActedInTurn++;
             }
+            
+            if (didRaiseOrBet)
+            {
+                playersActedInTurn = 1; 
+                playersInOrder = GetPlayersInBettingOrder(roundType);
+                playerIndex = playersInOrder.IndexOf(currentPlayer);
+            }
+
+            var maxBet = controller.CurrentMaxBet;
+            bool allBetsMatched = activePlayers.All(p => p.GetCurrentBetInRound() == maxBet || p.GetChips() == 0);
+
+            if (playersActedInTurn >= playersInOrder.Count && allBetsMatched)
+                break;
             
             playerIndex++;
-
-            // Cek kondisi akhir babak
-            var playersStillIn = controller.GetSeatedPlayers().Where(p => !p.IsFolded()).ToList();
-            var maxBet = controller.CurrentMaxBet;
-            bool allBetsMatched = playersStillIn.All(p => p.GetCurrentBetInRound() == maxBet || p.GetChips() == 0);
-
-            // Babak berakhir jika semua orang sudah bertindak dan taruhan sudah cocok.
-            // Pengecekan actionCount >= playersStillIn.Count memastikan semua orang mendapat giliran setelah raise terakhir.
-            if(allBetsMatched && actionCount >= playersStillIn.Count)
-            {
-                break;
-            }
-            
-            // Safety break untuk menghindari loop tak terbatas
-            if (playerIndex > playersInOrder.Count * 4) break; 
+            if (playerIndex > playersInOrder.Count * 4)
+                break; 
         }
     }
 
-    static void RequestAndHandlePlayerAction(IPlayer player)
+    static bool RequestAndHandlePlayerAction(IPlayer player)
     {
-        Console.WriteLine($"\n> Giliran {player.GetName()} (Chips: {player.GetChips()})");
-        PrintHand(player.GetHand());
+        display.DisplayPlayerTurn(player);
 
         int amountToCall = controller.CurrentMaxBet - player.GetCurrentBetInRound();
         bool canCheck = amountToCall <= 0;
+        bool hasRaisedOrBet = false;
 
-        Console.Write("  Opsi: (F) Fold");
-        if(canCheck) Console.Write(" | (K) Check");
-        else Console.Write($" | (C) Call [{Math.Min(amountToCall, player.GetChips())}]");
-        if(player.GetChips() > amountToCall) Console.Write(" | (R) Raise");
-        Console.WriteLine($" | (A) All-in");
+        Console.Write("  Opsi: (F)old");
+        if (canCheck) Console.Write(" | (K)heck");
+        else
+        {
+            Console.Write($" | (C)all [{Math.Min(amountToCall, player.GetChips())}]");
+        }
+        if (player.GetChips() > amountToCall) Console.Write(" | (R)aise");
+        Console.WriteLine($" | (A)ll-in");
 
         while (true)
         {
@@ -150,193 +144,176 @@ class Program
             string? input = Console.ReadLine()?.Trim().ToUpper();
             switch (input)
             {
-                case "F": controller.HandlePlayerAction(player, ActionType.Fold, 0); return;
+                case "F": controller.HandlePlayerAction(player, ActionType.Fold, 0);
+                    break;
                 case "K":
-                    if (!canCheck) { Console.WriteLine("  Tidak bisa Check, harus Call."); continue; }
-                    controller.HandlePlayerAction(player, ActionType.Check, 0);
-                    return;
-                case "C":
-                    if (canCheck) { Console.WriteLine("  Tidak perlu Call, cukup Check."); continue; }
-                    controller.HandlePlayerAction(player, ActionType.Call, amountToCall);
-                    return;
-                case "R":
-                    if(player.GetChips() <= amountToCall) { Console.WriteLine("  Chip tidak cukup untuk Raise."); continue; }
-                    Console.Write($"  Masukkan jumlah TAMBAHAN untuk Raise (min {controller.MinRaise}): ");
-                    if (int.TryParse(Console.ReadLine(), out int raiseAmount) && raiseAmount >= controller.MinRaise)
+                    if (!canCheck)
                     {
-                        int totalCommitment = amountToCall + raiseAmount;
-                        if(totalCommitment >= player.GetChips()) { Console.WriteLine("  Jumlah tidak valid. Gunakan All-in."); continue; }
-                        controller.HandlePlayerAction(player, ActionType.Raise, totalCommitment);
-                        return;
+                        display.ShowMessage("  Tidak bisa Check, harus Call.", ConsoleColor.Red);
                     }
-                    Console.WriteLine("  Jumlah tidak valid.");
-                    continue;
+                    controller.HandlePlayerAction(player, ActionType.Check, 0);
+                    break;
+                case "C":
+                    if (canCheck)
+                    {
+                        display.ShowMessage("  Tidak perlu Call, cukup Check.", ConsoleColor.Red);
+                    }
+                    controller.HandlePlayerAction(player, ActionType.Call, amountToCall);
+                    break;
+                case "R":
+                    if (player.GetChips() <= amountToCall)
+                    {
+                        display.ShowMessage("  Chip tidak cukup untuk Raise.", ConsoleColor.Red);
+                    }
+                    Console.Write($"  Masukkan jumlah TOTAL taruhan baru (min {controller.CurrentMaxBet + controller.minRaiseAmount}): ");
+                    if (int.TryParse(Console.ReadLine(), out int totalBet) && totalBet >= controller.CurrentMaxBet + controller.minRaiseAmount)
+                    {
+                        int amountToCommit = totalBet - player.GetCurrentBetInRound();
+                        if(amountToCommit > player.GetChips()) { display.ShowMessage("  Jumlah melebihi chip Anda.", ConsoleColor.Red); }
+                        controller.HandlePlayerAction(player, ActionType.Raise, amountToCommit); 
+                        hasRaisedOrBet = true;
+                        break;
+                    }
+                    display.ShowMessage("  Jumlah tidak valid.", ConsoleColor.Red);
+                    break;
                 case "A":
-                    controller.HandlePlayerAction(player, ActionType.AllIn, 0); // Amount diabaikan, controller akan menggunakan semua chip
-                    return;
+                    int oldMaxBet = controller.CurrentMaxBet;
+                    controller.HandlePlayerAction(player, ActionType.AllIn, player.GetChips()); 
+                    if(controller.CurrentMaxBet > oldMaxBet) hasRaisedOrBet = true;
+                    break;
                 default:
-                    Console.WriteLine("  Input salah.");
+                    display.ShowMessage("  Input salah. Gunakan F, K, C, R, atau A.", ConsoleColor.Red); 
                     break;
             }
+            return hasRaisedOrBet;
         }
     }
-
+    
     static List<IPlayer> GetPlayersInBettingOrder(BettingRoundType roundType)
     {
         var activePlayers = controller.GetSeatedPlayers();
         int dealerIndex = activePlayers.FindIndex(p => p.GetPosition() == Position.Dealer);
-        if (dealerIndex == -1) dealerIndex = 0;
-
+        if (dealerIndex == -1)
+        {
+            dealerIndex = 0;
+        }
         int startIndex;
         if (roundType == BettingRoundType.PreFlop)
         {
-            if (activePlayers.Count == 2) startIndex = dealerIndex; // Heads-up, Dealer/SB bertindak dulu
-            else startIndex = (dealerIndex + 3) % activePlayers.Count; 
+            if (activePlayers.Count == 2) startIndex = dealerIndex;
+            else
+            {
+                startIndex = (dealerIndex + 3) % activePlayers.Count;
+            }
         }
         else
         {
-             if (activePlayers.Count == 2) startIndex = (dealerIndex + 1) % 2; // Heads-up, BB bertindak dulu
-             else startIndex = (dealerIndex + 1) % activePlayers.Count; // SB
+            if (activePlayers.Count == 2) startIndex = (dealerIndex + 1) % 2;
+            else
+            {
+                startIndex = (dealerIndex + 1) % activePlayers.Count;
+            }
         }
-
         List<IPlayer> orderedList = new();
-        for (int i = 0; i < activePlayers.Count; i++)
-        {
-            orderedList.Add(activePlayers[(startIndex + i) % activePlayers.Count]);
-        }
-        return orderedList;
+        for (int i = 0; i < activePlayers.Count; i++) orderedList.Add(activePlayers[(startIndex + i) % activePlayers.Count]);
+        return orderedList.Where(p => !p.IsFolded()).ToList();
     }
-
+    
     static void PerformShowdown()
     {
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("\n--- SHOWDOWN ---");
-        Console.ResetColor();
-
+        display.ShowShowdown();
         var activePlayers = controller.GetSeatedPlayers().Where(p => !p.IsFolded()).ToList();
         int potAmount = pot.GetAmount();
-
         if (activePlayers.Count <= 1)
         {
             if (activePlayers.Any())
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\n🏆 Pemenang: {activePlayers.First().GetName()} karena semua pemain lain telah Fold. memenangkan pot sebesar {potAmount}!");
-                Console.ResetColor();
+                display.ShowFoldWinner(activePlayers.First(), potAmount);
                 controller.AwardPot(activePlayers);
             }
             return;
         }
+        display.DisplayCommunityCards(table);
+        Dictionary<IPlayer, HandEvaluationResult> evaluations = new();
 
-        PrintCommunityCards();
-
-        Dictionary<IPlayer, (HandRank Rank, List<CardValue> HighCards)> evaluations = new();
         foreach (var player in activePlayers.Cast<Player>())
         {
             var eval = controller.EvaluateHand(player.GetHand(), table.GetCommunityCards());
             evaluations.Add(player, eval);
             player.FinalHandRank = eval.Rank;
             player.FinalHighCards = eval.HighCards;
-            Console.WriteLine($"\n{player.GetName()} memiliki: {GetReadableHandRank(eval.Rank)} ({string.Join(", ", eval.HighCards.Select(RankToString))})");
-            PrintHand(player.GetHand());
+            display.ShowPlayerHandEvaluation(player, eval);
         }
 
         var bestRank = evaluations.Values.Max(e => e.Rank);
         var potentialWinners = evaluations.Where(kvp => kvp.Value.Rank == bestRank).ToList();
-        
-        List<IPlayer> finalWinners = potentialWinners.OrderByDescending(p => p.Value.HighCards, new ListComparer<CardValue>()).Select(p => p.Key).ToList();
-        var bestHandHighCards = finalWinners.Cast<Player>().First().FinalHighCards;
-        finalWinners = finalWinners.Where(p => ((Player)p).FinalHighCards.SequenceEqual(bestHandHighCards)).ToList();
-        
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"\n🏆 Pemenang: {string.Join(" & ", finalWinners.Select(p => p.GetName()))} dengan {GetReadableHandRank(bestRank)} memenangkan pot sebesar {potAmount}!");
-        Console.ResetColor();
+        List<IPlayer> finalWinners;
+        if (potentialWinners.Count == 1) finalWinners = new List<IPlayer>
+        {
+            potentialWinners.First().Key
+        };
+        else  
+        {
+            finalWinners = potentialWinners.OrderByDescending(p => p.Value.HighCards, new ListRankComparer()).Select(p => p.Key).ToList();
+            var bestKickers = ((Player)finalWinners.First()).FinalHighCards;
+            finalWinners = finalWinners.Where(p => ((Player)p).FinalHighCards.SequenceEqual(bestKickers)).ToList();
+        }
+        if (finalWinners.Count == 1) display.ShowWinner(finalWinners.First(), bestRank, potAmount);
+        else
+        {
+            display.ShowSplitPot(finalWinners, bestRank, potAmount);
+        }
         controller.AwardPot(finalWinners);
     }
-      
-
-    static void PrintPlayers()
-    {
-        Console.WriteLine("\n--- Status Pemain ---");
-        foreach (var p in controller.GetSeatedPlayers())
-        {
-            string status = p.IsFolded() ? " (Folded)" : (p.GetChips() == 0 ? " (All-In)" : "");           
-            string pos = p.GetPosition() switch {
-                Position.Dealer => "(D)",
-                Position.Small_Blind => "(SB)",
-                Position.Big_Blind => "(BB)",
-                Position.Early_Position => "(EP)",
-                Position.Middle_Position => "(MP)",
-                Position.Late_Position => "(LP)",
-                _ => ""
-            };
-
-            Console.WriteLine($"{p.GetName(), -10}{pos,-5}| Chips: {p.GetChips(),-5} | Bet: {p.GetCurrentBetInRound(),-4}{status}");
-        }
-        Console.WriteLine($"Total Pot: {pot.GetAmount()}");
-    }
-
-    static void PrintCommunityCards()
-    {
-        Console.WriteLine("\n--- Kartu Meja ---");
-        var community = table.GetCommunityCards();
-        if (!community.Any()) Console.WriteLine("(Belum ada kartu)");
-        else PrintHand(community);
-    }
-
-    static void PrintHand(List<ICard> cards)
-    {
-        if (cards == null || !cards.Any()) return;
-        List<string[]> cardVisuals = cards.Select(GetCardVisual).ToList();
-        for (int i = 0; i < 5; i++) Console.WriteLine(string.Join(" ", cardVisuals.Select(c => c[i])));
-        
-    }
-
-    static string[] GetCardVisual(ICard card)
-    {
-        string rank = card.Value switch { CardValue.Ten => "10", CardValue.Jack => "J", CardValue.Queen => "Q", CardValue.King => "K", CardValue.Ace => "A", _ => ((int)card.Value).ToString() };
-        string suit = card.Suit switch { Suit.Spades => "♠", Suit.Hearts => "♥", Suit.Diamonds => "♦", Suit.Clubs => "♣", _ => "?" };
-        return new[] { "┌───────┐", $"| {rank.PadRight(2)}    |", $"|   {suit}   |", $"|    {rank.PadLeft(2)} |", "└───────┘" };
-    }
-
+    
     static int GetPlayerCount(int min, int max)
     {
         while (true)
         {
             Console.Write($"Masukkan jumlah pemain ({min}-{max}): ");
-            if (int.TryParse(Console.ReadLine(), out int count) && count >= min && count <= max) return count;
-            Console.WriteLine("Input tidak valid.");
+            if (int.TryParse(Console.ReadLine(), out int count) && count >= min && count <= max)
+                return count;
+            {
+                display.ShowMessage("Input tidak valid.", ConsoleColor.Red);
+            }
         }
     }
-
     static int GetPlayerChips(int playerNumber, int defaultChips)
     {
         while (true)
         {
             Console.Write($"Masukkan chip untuk Pemain {playerNumber} (default: {defaultChips}): ");
             string? input = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(input)) return defaultChips;
-            if (int.TryParse(input, out int chips) && chips > 20) return chips;
-            Console.WriteLine("Input tidak valid. Chip harus lebih besar dari Big Blind (20).");
+            if (string.IsNullOrWhiteSpace(input))
+                return defaultChips;
+            if (int.TryParse(input, out int chips) && chips > controller.minRaiseAmount*2)
+                return chips;
+            display.ShowMessage($"Input tidak valid. Chip harus lebih besar dari Big Blind ({controller.minRaiseAmount}).", ConsoleColor.Red);
         }
     }
-
-    static string GetReadableHandRank(HandRank r) => r.ToString().Replace("_", " ");
-    static string RankToString(CardValue r) => r switch {
-        CardValue.Ten => "T", CardValue.Jack => "J", CardValue.Queen => "Q", CardValue.King => "K", CardValue.Ace => "A", _ => ((int)r).ToString()
-    };
+    
 }
 
-public class ListComparer<T> : IComparer<List<T>> where T : IComparable
+public class ListRankComparer : IComparer<List<CardValue>>
 {
-    public int Compare(List<T>? x, List<T>? y)
+    public int Compare(List<CardValue>? x, List<CardValue>? y)
     {
-        if (x == null || y == null) return 0;
-        for (int i = 0; i < Math.Min(x.Count, y.Count); i++)
+        int result = 0;
+        if (x != null && y != null)
         {
-            int c = x[i].CompareTo(y[i]);
-            if (c != 0) return c;
+            for (int i = 0; i < Math.Min(x.Count, y.Count); i++)
+            {
+                result = y[i].CompareTo(x[i]);
+                if (result != 0)
+                {
+                    break;
+                }
+            }
+            if (result == 0)
+            {
+                result = y.Count.CompareTo(x.Count);
+            }
         }
-        return x.Count.CompareTo(y.Count);
+        return result;
     }
 }

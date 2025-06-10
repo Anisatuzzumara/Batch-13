@@ -1,7 +1,7 @@
 using Poker.Enumerations;
 using Poker.Interfaces;
 
-namespace Poker.Classes
+namespace Poker.Model
 {
     public class Card : ICard
     {
@@ -13,8 +13,19 @@ namespace Poker.Classes
             Value = value;
         }
 
-        public Suit GetSuit() => Suit;
-        public CardValue GetValue() => Value;
-        public string ToString() => $"{Value} of {Suit}";
+        public Suit GetSuit()
+        {
+            return Suit;
+        }
+
+        public CardValue GetValue()
+        {
+            return Value;
+        }
+
+        public override string ToString()
+        {
+            return $"{Value} of {Suit}";
+        }
     }
 }

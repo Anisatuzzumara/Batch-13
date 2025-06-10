@@ -17,6 +17,6 @@ namespace Poker.Interfaces
         void SetCurrentBetInRound(int currentBetInRound);
         List<ICard> GetHand();
         void AddCardToHand(ICard card);
-       
+
     }
 }
