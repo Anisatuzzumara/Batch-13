@@ -1,0 +1,12 @@
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\bin\Debug\net8.0\Prima.deps.json
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\bin\Debug\net8.0\Prima.dll
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\bin\Debug\net8.0\Prima.pdb
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\Prima.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\Prima.AssemblyInfoInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\Prima.AssemblyInfo.cs
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\Prima.csproj.CoreCompileInputs.cache
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\Prima.sourcelink.json
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\Prima.dll
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\refint\Prima.dll
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\Prima.pdb
+C:\Users\Anisazumara\Documents\Batch 13\unit-testing-using-nunit\unit-testing-using-nunit\Prima\obj\Debug\net8.0\ref\Prima.dll
