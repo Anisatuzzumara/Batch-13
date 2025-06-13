@@ -1,0 +1,14 @@
+[2025-06-12 10:00:05.329 +07:00] [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] [] Failed to determine the https port for redirect.
+[2025-06-12 10:00:05.593 +07:00] [WRN] [Serilog.Demo.Services.UserService] [5311c98d] Authentication failed - User nsazumara not found
+[2025-06-12 10:00:05.602 +07:00] [WRN] [Serilog.Demo.Controllers.UsersController] [55dde128] Login failed for username nsazumara in 130ms
+[2025-06-12 10:00:52.716 +07:00] [WRN] [Serilog.Demo.Services.UserService] [5a48b691] Authentication failed - User nsazumara not found
+[2025-06-12 10:00:52.721 +07:00] [WRN] [Serilog.Demo.Controllers.UsersController] [3bd68dff] Login failed for username nsazumara in 114ms
+[2025-06-12 10:01:50.297 +07:00] [WRN] [Serilog.Demo.Services.UserService] [127df17f] User with ID 7765432 not found
+[2025-06-12 10:01:50.304 +07:00] [WRN] [Serilog.Demo.Controllers.UsersController] [127df17f] User 7765432 not found
+[2025-06-12 10:01:57.912 +07:00] [WRN] [Serilog.Demo.Services.UserService] [85af8c10] User with ID 7765432 not found
+[2025-06-12 10:01:57.916 +07:00] [WRN] [Serilog.Demo.Controllers.UsersController] [85af8c10] User 7765432 not found
+[2025-06-12 10:05:29.635 +07:00] [WRN] [Serilog.Demo.Services.UserService] [829f0935] Authentication failed - User john.doe not found
+[2025-06-12 10:05:29.639 +07:00] [WRN] [Serilog.Demo.Controllers.UsersController] [45b60002] Login failed for username john.doe in 112ms
+[2025-06-12 10:14:58.500 +07:00] [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] [] Failed to determine the https port for redirect.
+[2025-06-12 10:14:58.746 +07:00] [WRN] [Serilog.Demo.Services.UserService] [7e76829a] Authentication failed - User john.doe not found
+[2025-06-12 10:14:58.755 +07:00] [WRN] [Serilog.Demo.Controllers.UsersController] [22b42a8a] Login failed for username john.doe in 135ms

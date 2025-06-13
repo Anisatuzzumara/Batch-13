@@ -9,7 +9,7 @@ namespace ECommerce.API.Services
     /// </summary>
     public class PaymentService : IPaymentService
     {
-        private readonly IShipmentService _shipmentService;
+        IShipmentService _shipmentService;
 
         public PaymentService(IShipmentService shipmentService)
         {
@@ -30,16 +30,16 @@ namespace ECommerce.API.Services
             }            // Card validation rules
             if (order.Card == null)
                 return "Payment card is required";
+            {
+                // Check if card is expired
+                if (order.Card.ValidTo < DateTime.Now)
+                    return "Card Expired";
 
-            // Check if card is expired
-            if (order.Card.ValidTo < DateTime.Now)
-                return "Card Expired";
-
-            // Validate card number length (simplified validation)
-            // Real applications would use more sophisticated card validation
-            if (order.Card.CardNumber.Length < 16)
-                return "CardNumber Not Valid";
-
+                // Validate card number length (simplified validation)
+                // Real applications would use more sophisticated card validation
+                if (order.Card.CardNumber.Length < 16)
+                    return "CardNumber Not Valid";
+            }
             // Process the actual payment through external service
             bool paymentSuccess = MakePayment(order.Card);
 
