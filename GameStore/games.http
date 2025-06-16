@@ -1,0 +1,32 @@
+GET http://localhost:5093/games
+
+###
+
+GET http://localhost:5093/games/2
+
+
+###
+POST http://localhost:5093/games
+Content-Type: application/json
+
+{
+  "name": "kolt",
+  "genreId": 5,
+  "price": 19.99,
+  "releaseDate": "2023-10-01"
+}   
+
+###
+PUT http://localhost:5093/games/3
+Content-Type: application/json
+
+{
+  "name": "Fantastic Four",
+  "genreId": 9,
+  "price": 49.99,
+  "releaseDate": "2013-10-01"
+}
+
+
+###
+Delete http://localhost:5093/games/2

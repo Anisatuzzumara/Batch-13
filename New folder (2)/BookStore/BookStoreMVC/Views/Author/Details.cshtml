@@ -1,0 +1,16 @@
+@model BookStoreMVC.Models.Author
+
+@{
+    ViewData["Title"] = "Author Details";
+}
+
+<h1>Author Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.Name</h4>
+        <p class="card-text"><strong>Bio:</strong> @Model.Bio</p>
+        <a asp-action="Edit" asp-route-id="@Model.AuthorID" class="btn btn-warning">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
