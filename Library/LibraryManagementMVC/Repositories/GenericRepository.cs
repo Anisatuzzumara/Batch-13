@@ -7,10 +7,6 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementMVC.Repository
 {
-    /// <summary>
-    /// Implementasi generik dari IGenericRepository.
-    /// Menyediakan implementasi dasar untuk operasi CRUD.
-    /// </summary>
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _context;

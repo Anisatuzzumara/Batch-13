@@ -23,11 +23,19 @@ namespace LibraryManagementMVC.Data
                     .IsRequired()
                     .HasMaxLength(150);
 
-                
-                entity.HasMany(p => p.Books)                 
-                      .WithOne(b => b.Publisher)              
-                      .HasForeignKey(b => b.PubId)      
-                      .OnDelete(DeleteBehavior.Restrict);     
+                entity.Property(p => p.Country)
+                    .HasMaxLength(100);
+
+                entity.Property(p => p.City)
+                    .HasMaxLength(100);
+
+                entity.Property(p => p.Email)
+                    .HasMaxLength(100);
+
+                entity.HasMany(p => p.Books)
+                      .WithOne(b => b.Publisher)
+                      .HasForeignKey(b => b.PubId)
+                      .OnDelete(DeleteBehavior.Restrict); 
             });
             
             modelBuilder.Entity<Book>(entity =>
@@ -48,15 +56,17 @@ namespace LibraryManagementMVC.Data
 
             
             modelBuilder.Entity<Publisher>().HasData(
-                new Publisher { PubId = 1, Name = "Gramedia Pustaka Utama", Country = "Indonesia" },
-                new Publisher { PubId = 2, Name = "Mizan Pustaka", Country = "Indonesia" },
-                new Publisher { PubId = 3, Name = "Penguin Books", Country = "United Kingdom" }
+                new Publisher { PubId = 1, Name = "Gramedia Pustaka Utama", Country = "Indonesia", City = "Bandung", Email = "Gramediapustaka@gmail.com" },
+                new Publisher { PubId = 2, Name = "KPG (Kepustakaan Populer Gramedia)", Country = "Indonesia", City = "Jakarta", Email = "KPG14@gmail.com"  },
+                new Publisher { PubId = 3, Name = "Delacorte Press", Country = "United Kingdom", City = "London", Email = "DelacortePress@gmail.com" }
+
             );
 
             modelBuilder.Entity<Book>().HasData(
                 new Book { BookId = 1, Title = "Laskar Pelangi", Author = "Andrea Hirata", ISBN = "978-979-3062-79-2", PublishedYear = 2005, PubId = 2 },
                 new Book { BookId = 2, Title = "Bumi Manusia", Author = "Pramoedya Ananta Toer", ISBN = "978-979-97312-3-4", PublishedYear = 1980, PubId = 1 },
-                new Book { BookId = 3, Title = "1984", Author = "George Orwell", ISBN = "978-0-452-28423-4", PublishedYear = 1949, PubId = 3 }
+                new Book { BookId = 3, Title = "The Maze Runner", Author = "James Dashner", ISBN = "978-979-433-655-7", PublishedYear = 2009, PubId = 3 },
+                new Book { BookId = 4, Title = "Laut Bercerita", Author = "Leila S. Chudori", ISBN ="978-979-91-0644-1", PublishedYear = 2010, PubId=1}
             );
         }
     }

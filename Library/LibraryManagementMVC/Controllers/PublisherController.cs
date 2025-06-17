@@ -2,6 +2,7 @@ using AutoMapper;
 using LibraryManagementMVC.DTOs;
 using LibraryManagementMVC.Infrastructure.Repositories;
 using LibraryManagementMVC.Models;
+using LibraryManagementMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,121 +10,118 @@ namespace LibraryManagementMVC.Controllers
 {
     public class PublishersController : Controller
     {
-        private readonly IPublisherRepository _repo;
+        private readonly IPublisherService _publisherService;
         private readonly IMapper _mapper;
-        public PublishersController(IPublisherRepository repo, IMapper mapper)
+
+        public PublishersController(IPublisherService publisherService, IMapper mapper)
         {
-            _repo = repo;
+            _publisherService = publisherService;
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        // GET: /Publishers
+        public async Task<IActionResult> Index(string searchString)
         {
-            var publishers = await _repo.GetAllAsync();
-            var publisherDtos = _mapper.Map<IEnumerable<PublisherDto>>(publishers);
-            return View(publisherDtos);
+            var publishers = await _publisherService.SearchPublishersAsync(searchString ?? string.Empty);
+            var viewModels = _mapper.Map<IEnumerable<PublisherDto>>(publishers);
+            ViewData["CurrentFilter"] = searchString;
+            return View(viewModels);
         }
 
-        public async Task<IActionResult> Details(int id)
+        // GET: /Publishers/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            var publisher = await _repo.GetByIdAsync(id);
-            if (publisher == null)
-            {
-                ViewBag.Message = $"Publisher with ID {id} was not found.";
-                return View("NotFound");
-            }
-            var dto = _mapper.Map<PublisherDto>(publisher);
-            return View(dto);
+            if (id == null) return NotFound();
+            var publisher = await _publisherService.GetPublisherByIdAsync(id.Value);
+            if (publisher == null) return NotFound();
+
+            var viewModel = _mapper.Map<PublisherDto>(publisher);
+            return View(viewModel);
         }
 
-        public IActionResult Create() => View();
+        // GET: /Publishers/Create
+        public IActionResult Create()
+        {
+            // Mengirim DTO kosong yang spesifik untuk operasi Create
+            return View(new PublisherCreateDto());
+        }
 
+        // POST: /Publishers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Country")] Publisher publisher)
+        public async Task<IActionResult> Create(PublisherCreateDto viewModel)
         {
             if (ModelState.IsValid)
             {
-                await _repo.AddAsync(publisher);
-                await _repo.SaveChangesAsync();
+                var publisher = _mapper.Map<Publisher>(viewModel);
+                await _publisherService.CreatePublisherAsync(publisher);
+                TempData["SuccessMessage"] = "Penerbit berhasil ditambahkan!";
                 return RedirectToAction(nameof(Index));
             }
-            return View(publisher);
-        }
-        
-        // GET: Publishers/Edit/5
-        public async Task<IActionResult> Edit(int id)
-        {
-            var publisher = await _repo.GetByIdAsync(id);
-            if (publisher == null)
-            {
-                ViewBag.Message = $"Publisher with ID {id} was not found.";
-                return View("NotFound");
-            }
-            var dto = _mapper.Map<PublisherCreateUpdateDto>(publisher);
-            return View(dto);
+            return View(viewModel);
         }
 
-        // POST: Publishers/Edit/5
+        // GET: /Publishers/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+            var publisher = await _publisherService.GetPublisherByIdAsync(id.Value);
+            if (publisher == null) return NotFound();
+
+            // Mengirim DTO yang spesifik untuk operasi Update
+            var viewModel = _mapper.Map<PublisherUpdateDto>(publisher);
+            return View(viewModel);
+        }
+
+        // POST: /Publishers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, PublisherCreateUpdateDto dto)
+        public async Task<IActionResult> Edit(int id, PublisherUpdateDto viewModel)
         {
-            if (id != dto.PubId)
-            {
-                return BadRequest();
-            }
+            if (id != viewModel.PubId) return BadRequest();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var publisher = _mapper.Map<Publisher>(dto);
-                    _repo.Update(publisher);
-                    await _repo.SaveChangesAsync();
+                    var publisher = _mapper.Map<Publisher>(viewModel);
+                    await _publisherService.UpdatePublisherAsync(publisher);
+                    TempData["SuccessMessage"] = "Penerbit berhasil diperbarui!";
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (System.Exception)
                 {
-                    // Handle concurrency issues if necessary
-                    throw;
+                    // Menangani jika terjadi error saat update
+                    ModelState.AddModelError("", "Gagal menyimpan perubahan. Silakan coba lagi.");
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(dto);
+            return View(viewModel);
         }
 
-        // GET: Publishers/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        // GET: /Publishers/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            var publisher = await _repo.GetByIdAsync(id);
-            if (publisher == null)
-            {
-                ViewBag.Message = $"Publisher with ID {id} was not found.";
-                return View("NotFound");
-            }
-            var dto = _mapper.Map<PublisherDto>(publisher);
-            return View(dto);
+            if (id == null) return NotFound();
+            var publisher = await _publisherService.GetPublisherByIdAsync(id.Value);
+            if (publisher == null) return NotFound();
+
+            var viewModel = _mapper.Map<PublisherDto>(publisher);
+            return View(viewModel);
         }
 
-        // POST: Publishers/Delete/5
+        // POST: /Publishers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var publisher = await _repo.GetByIdAsync(id);
-            if (publisher != null)
+            var success = await _publisherService.DeletePublisherAsync(id);
+            if (success)
             {
-                try
-                {
-                    _repo.Delete(publisher);
-                    await _repo.SaveChangesAsync();
-                }
-                catch (DbUpdateException)
-                {
-                    // Handle error if publisher cannot be deleted (e.g., has related books)
-                    TempData["ErrorMessage"] = $"The publisher '{publisher.Name}' cannot be deleted as it has related books.";
-                    return RedirectToAction(nameof(Index));
-                }
+                TempData["SuccessMessage"] = "Penerbit berhasil dihapus!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Gagal menghapus penerbit. Mungkin masih digunakan oleh satu atau beberapa buku.";
             }
             return RedirectToAction(nameof(Index));
         }

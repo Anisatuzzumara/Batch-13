@@ -19,7 +19,9 @@ namespace LibraryManagementMVC.Migrations
                     PubId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
-                    Country = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
+                    Country = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    City = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,12 +53,12 @@ namespace LibraryManagementMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Publishers",
-                columns: new[] { "PubId", "Country", "Name" },
+                columns: new[] { "PubId", "City", "Country", "Email", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Indonesia", "Gramedia Pustaka Utama" },
-                    { 2, "Indonesia", "Mizan Pustaka" },
-                    { 3, "United Kingdom", "Penguin Books" }
+                    { 1, "Bandung", "Indonesia", "Gramediapustaka@gmail.com", "Gramedia Pustaka Utama" },
+                    { 2, "Jakarta", "Indonesia", "KPG14@gmail.com", "KPG (Kepustakaan Populer Gramedia)" },
+                    { 3, "London", "United Kingdom", "DelacortePress@gmail.com", "Delacorte Press" }
                 });
 
             migrationBuilder.InsertData(
@@ -66,7 +68,8 @@ namespace LibraryManagementMVC.Migrations
                 {
                     { 1, "Andrea Hirata", "978-979-3062-79-2", 2, 2005, "Laskar Pelangi" },
                     { 2, "Pramoedya Ananta Toer", "978-979-97312-3-4", 1, 1980, "Bumi Manusia" },
-                    { 3, "George Orwell", "978-0-452-28423-4", 3, 1949, "1984" }
+                    { 3, "James Dashner", "978-979-433-655-7", 3, 2009, "The Maze Runner" },
+                    { 4, "Leila S. Chudori", "978-979-91-0644-1", 1, 2010, "Laut Bercerita" }
                 });
 
             migrationBuilder.CreateIndex(

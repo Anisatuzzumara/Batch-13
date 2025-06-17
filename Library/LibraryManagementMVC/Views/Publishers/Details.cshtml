@@ -4,17 +4,41 @@
     ViewData["Title"] = "Publisher Details";
 }
 
-<h1>Publisher Details</h1>
-<hr />
-<dl class="row">
-    <dt class="col-sm-2">Name</dt>
-    <dd class="col-sm-10">@Model.Name</dd>
-    <dt class="col-sm-2">Country</dt>
-    <dd class="col-sm-10">@Model.Country</dd>
-    <dt class="col-sm-2">Books Count</dt>
-    <dd class="col-sm-10">@Model.BooksCount</dd>
-</dl>
-<p>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+<div>
+    <h1>@Model.Name</h1>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.BooksCount)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.BooksCount)
+        </dd>
+    </dl>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.PubId" class="btn btn-warning">Change</a> 
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-</p>
+</div>

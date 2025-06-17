@@ -30,7 +30,7 @@ public class PublisherService : IPublisherService
         {
             return allPublishers;
         }
-        
+
         return allPublishers.Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
     }
 
@@ -65,5 +65,15 @@ public class PublisherService : IPublisherService
             return false;
         }
     }
+    
+    public async Task<IEnumerable<Publisher>> GetTopPublishersAsync(int count)
+        {
+            // Service layer hanya memvalidasi dan meneruskan panggilan ke repository yang sesuai.
+            if (count <= 0)
+            {
+                return new List<Publisher>();
+            }
+            return await _repo.GetTopPublishersAsync(count);
+        }
 }
 

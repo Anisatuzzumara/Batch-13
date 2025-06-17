@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManagementMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250616183926_InitialCreate")]
+    [Migration("20250617045706_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -77,11 +77,20 @@ namespace LibraryManagementMVC.Migrations
                         new
                         {
                             BookId = 3,
-                            Author = "George Orwell",
-                            ISBN = "978-0-452-28423-4",
+                            Author = "James Dashner",
+                            ISBN = "978-979-433-655-7",
                             PubId = 3,
-                            PublishedYear = 1949,
-                            Title = "1984"
+                            PublishedYear = 2009,
+                            Title = "The Maze Runner"
+                        },
+                        new
+                        {
+                            BookId = 4,
+                            Author = "Leila S. Chudori",
+                            ISBN = "978-979-91-0644-1",
+                            PubId = 1,
+                            PublishedYear = 2010,
+                            Title = "Laut Bercerita"
                         });
                 });
 
@@ -91,7 +100,17 @@ namespace LibraryManagementMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
@@ -109,20 +128,26 @@ namespace LibraryManagementMVC.Migrations
                         new
                         {
                             PubId = 1,
+                            City = "Bandung",
                             Country = "Indonesia",
+                            Email = "Gramediapustaka@gmail.com",
                             Name = "Gramedia Pustaka Utama"
                         },
                         new
                         {
                             PubId = 2,
+                            City = "Jakarta",
                             Country = "Indonesia",
-                            Name = "Mizan Pustaka"
+                            Email = "KPG14@gmail.com",
+                            Name = "KPG (Kepustakaan Populer Gramedia)"
                         },
                         new
                         {
                             PubId = 3,
+                            City = "London",
                             Country = "United Kingdom",
-                            Name = "Penguin Books"
+                            Email = "DelacortePress@gmail.com",
+                            Name = "Delacorte Press"
                         });
                 });
 

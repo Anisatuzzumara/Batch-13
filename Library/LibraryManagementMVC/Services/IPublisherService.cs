@@ -12,5 +12,6 @@ namespace LibraryManagementMVC.Services
         Task CreatePublisherAsync(Publisher publisher);
         Task UpdatePublisherAsync(Publisher publisher);
         Task<bool> DeletePublisherAsync(int id);
+         Task<IEnumerable<Publisher>> GetTopPublishersAsync(int count);
     }
 }
