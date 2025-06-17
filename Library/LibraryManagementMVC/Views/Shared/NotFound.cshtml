@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "Not Found";
+}
+
+<div class="alert alert-warning mt-4">
+    <h2>Not Found</h2>
+    <p>@(ViewBag.Message != null ? ViewBag.Message : "The requested resource was not found.")</p>
+    <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+    <a asp-controller="Publishers" asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
